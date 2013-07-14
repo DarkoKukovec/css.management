@@ -42,5 +42,15 @@ function(
 
     app.socket = io.connect(location.protocol + '//' + location.host);
 
+    app.socket.on('init', app.router.onInit);
+    app.socket.on('device-add', app.router.onDeviceAdd);
+    app.socket.on('device-remove', app.router.onDeviceRemove);
+    app.socket.on('disconnect', app.router.onDisconnect);
+
+    app.socket.emit('manager-init', {
+      id: app.data.id,
+      session: app.data.session
+    });
+
   }, this);
 });

@@ -19,7 +19,13 @@ function(
     collections: {},
     root: '',
     data: {
-      app_name: 'styl.io'
+      app_name: 'styl.io',
+      session: location.search.substr(1)
+    },
+    settings: {
+      defaults: {
+
+      }
     }
   };
 
@@ -38,8 +44,31 @@ function(
       }
 
       return JST[fullPath];
+    },
+    getSettings: function(name) {
+      app.settings[name] = app.settings[name] || localStorage[name];
+      return app.settings[name] || app.settings.defaults[name] || null;
+    },
+    setSettings: function(name, value) {
+      app.settings[name] = value;
+      localStorage[name] = value;
+    },
+    getId: function() {
+      if (!app.data.id) {
+        var id = localStorage.id;
+        if (id) {
+          app.data.id = id;
+        } else {
+          app.data.id = Math.round(Math.random() * 1e12).toString(36);
+          localStorage.id = app.data.id;
+        }
+      }
+      return app.data.id;
     }
   });
+
+  app.getId();
+
   // Localize or create a new JavaScript Template object.
   var JST = window.JST = window.JST || {};
 

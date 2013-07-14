@@ -31,6 +31,22 @@ function(
 
       var view = new MainView();
       $('#main').html(view.render().$el);
+    },
+
+    onInit: function() {
+
+    },
+
+    onDeviceAdd: function() {
+
+    },
+
+    onDeviceRemove: function() {
+
+    },
+
+    onDisconnect: function() {
+
     }
 
   });

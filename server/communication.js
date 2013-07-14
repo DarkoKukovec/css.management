@@ -59,7 +59,7 @@ socket.on('connection', function(client) {
     // Notify the manager
     client.emit('clientInit', hashes);
     if (managers[session]) {
-      managers[session].comm.emit('clientUpdate', data);
+      managers[session].comm.emit('device-add', data);
     }
   });
 
@@ -68,7 +68,7 @@ socket.on('connection', function(client) {
     // Notify the manager
   });
 
-  client.on('managerInit', function(data) {
+  client.on('manager-init', function(data) {
     // TODO Check if it already exists (id & session)
     var id = data.id;
     client.managerID = id;
@@ -82,10 +82,10 @@ socket.on('connection', function(client) {
     };
 
     clients[session].each(function(cl) {
-      client.emit('clientUpdate', cl.data);
+      client.emit('device-add', cl.data);
     });
 
-    client.emit('config', {
+    client.emit('init', {
       version: version,
       modernizr: modernizr
     });
@@ -116,7 +116,7 @@ socket.on('connection', function(client) {
         if (clientList[id]) {
           delete clientList[id];
           if (managers[session]) {
-            managers[session].comm.emit('clientDisconnect', id);
+            managers[session].comm.emit('device-remove', id);
           }
         }
       });
