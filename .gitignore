@@ -1,2 +1,10 @@
+node_modules/*
 *.DS_Store
-node_modules
+npm-debug.log
+*~
+*.lock
+*.swp
+*.out
+deploy/*
+assets/css/*
+.sass-cache/*
