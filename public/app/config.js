@@ -15,7 +15,9 @@ requirejs.config({
     backbone: '../assets/javascript/libs/backbone-1.0.0',
 
     // Internationalization
-    I18n: '../assets/javascript/libs/I18n'
+    I18n: '../assets/javascript/libs/I18n',
+
+    io: '../socket.io/socket.io.js'
   },
 
   shim: {

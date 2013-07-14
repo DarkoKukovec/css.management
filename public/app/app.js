@@ -4,7 +4,8 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'I18n'
+  'I18n',
+  'io'
   //plugins
 ],
 
@@ -15,7 +16,11 @@ function(
   ) {
   'use strict';
   var app = {
-    collections: {}
+    collections: {},
+    root: '',
+    data: {
+      app_name: 'styl.io'
+    }
   };
 
   _.extend(app, {

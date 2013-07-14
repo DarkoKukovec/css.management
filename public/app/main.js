@@ -39,5 +39,8 @@ function(
 
   I18n.loadTranslation(currentLanguage, function() {
     app.router = new Router();
+
+    app.socket = io.connect(location.protocol + '//' + location.host);
+
   }, this);
 });

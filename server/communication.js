@@ -9,9 +9,6 @@ var managers = {};
 var clients = {};
 
 socket.on('connection', function(client) {
-  client.on('ping', function() {
-    client.emit('pong');
-  });
 
   client.on('clientInit', function(data) {
     var id = data.id;
