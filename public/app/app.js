@@ -20,11 +20,12 @@ function(
     root: '',
     data: {
       app_name: 'styl.io',
-      session: location.search.substr(1)
+      version: '',
+      session: ''
     },
     settings: {
       defaults: {
-
+        'language': 'en'
       }
     }
   };

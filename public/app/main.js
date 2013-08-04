@@ -21,10 +21,10 @@ function(
       } else {
         return decodeURIComponent(results[1].replace(/\+/g, ' '));
       }
-    };
+  };
 
 
-  var currentLanguage = getParameterByName('language') || 'en';
+  var currentLanguage = app.getSettings('language');
   localStorage.setItem('lang', currentLanguage);
   //basic application config
   app.helpers = {
@@ -39,18 +39,10 @@ function(
 
   I18n.loadTranslation(currentLanguage, function() {
     app.router = new Router();
+    app.router.connect();
 
-    app.socket = io.connect(location.protocol + '//' + location.host);
-
-    app.socket.on('init', app.router.onInit);
-    app.socket.on('device-add', app.router.onDeviceAdd);
-    app.socket.on('device-remove', app.router.onDeviceRemove);
-    app.socket.on('disconnect', app.router.onDisconnect);
-
-    app.socket.emit('manager-init', {
-      id: app.data.id,
-      session: app.data.session
+    Backbone.history.start({
+      pushState: false
     });
-
   }, this);
 });

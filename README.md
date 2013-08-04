@@ -17,7 +17,7 @@
 
 ### Manager setup
 1. Manager to server - manager-init
-2. Server to manager - init
+2. Server to manager - manager-init
 3. Server to manager - device-add (for every active client)
 
 ### Client setup

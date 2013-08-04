@@ -1,9 +1,17 @@
 define([
-  'app'
+  'app',
+
+  // 'views/devices',
+  // 'views/files',
+  'views/footer'
 ],
 
 function(
-    app
+    app,
+
+    // DevicesView,
+    // FilesView,
+    FooterView
   ) {
   'use strict';
   var Main = Backbone.View.extend({
@@ -14,6 +22,10 @@ function(
       var me = this;
 
       this.$el.html(this.template(app.data));
+
+      var footer = new FooterView();
+      this.$('.footer').append(footer.render().$el);
+
       return this;
     },
 

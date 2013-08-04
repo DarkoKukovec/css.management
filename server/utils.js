@@ -9,7 +9,7 @@ Object.prototype.each = function(callback) {
   }
 };
 
-function removeParams(style) {
+removeParams = function(style) {
   var name = style.name.split('?');
   if (name.length > 1) {
     if (cacheParams.indexOf('.') !== -1) {
@@ -29,18 +29,18 @@ function removeParams(style) {
       }
     }
   }
-}
+};
 
-function getPlatformInfo(userAgent) {
-  var platform = platform.parse(userAgent);
-  if (platform.os.family.split(' ')[0].toLowerCase() == 'windows') {
-    platform.os.family = platform.os.family.split(' ')[0];
+getPlatformInfo = function(userAgent) {
+  var platformInfo = platform.parse(userAgent);
+  if (platformInfo.os.family.split(' ')[0].toLowerCase() == 'windows') {
+    platformInfo.os.family = platformInfo.os.family.split(' ')[0];
   }
-  platform.product = platform.product || '-';
-  return platform;
-}
+  platformInfo.product = platformInfo.product || '-';
+  return platformInfo;
+};
 
-function calculateHashes(style, parentHash, hashes, source) {
+calculateHashes = function(style, parentHash, hashes, source) {
   parentHash = parentHash || '';
   for (var i = 0; i < style.length; i++) {
 
@@ -69,7 +69,7 @@ function calculateHashes(style, parentHash, hashes, source) {
       calculateHashes(style[i].value, style[i].hash, hashes, source);
     }
   }
-}
+};
 
 function hash(text) {
   var shasum = crypto.createHash('sha1');
