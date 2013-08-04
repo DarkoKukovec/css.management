@@ -96,23 +96,32 @@ function(
 
     onDeviceAdd: function(data) {
       console.log('New device', data);
-      var device = app.collection.devices.get(data.id);
+      var device = app.collections.devices.get(data.id);
       if (device) {
         device.set('connected', true);
       } else {
-        app.collection.devices.add({
-          id: device.id,
-          platform: device.platform
+        app.collections.devices.add({
+          id: data.id,
+          platform: data.platform,
+          connected: true
         });
       }
+
+      // Should this be neccessary?
+      app.collections.devices.trigger('reset');
+
       // TODO: Add the device styles to the current styles.
       // When going trough the styles, references to the device have to be removed
       // for every style that this device doesn't contain anymore
     },
 
-    onDeviceRemove: function(data) {
-      console.log('Device gone', data);
-      app.collection.devices.get(data.id).set('connected', false);
+    onDeviceRemove: function(deviceId) {
+      console.log('Device gone', deviceId);
+      app.collections.devices.get(deviceId).set('connected', false);
+
+      // Should this be neccessary?
+      app.collections.devices.trigger('reset');
+
       // TODO: Go trough all the styles and lower the reference counter
       // for every item that references the disconnected device
       // The reference has to stay in order to be able to reapply the styles on refresh

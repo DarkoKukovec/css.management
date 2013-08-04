@@ -8,3 +8,4 @@ npm-debug.log
 deploy/*
 assets/css/*
 .sass-cache/*
+.nodemonignore

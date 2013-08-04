@@ -1,7 +1,7 @@
 define([
   'app',
 
-  // 'views/devices',
+  'views/devices',
   // 'views/files',
   'views/footer'
 ],
@@ -9,7 +9,7 @@ define([
 function(
     app,
 
-    // DevicesView,
+    DevicesView,
     // FilesView,
     FooterView
   ) {
@@ -22,6 +22,12 @@ function(
       var me = this;
 
       this.$el.html(this.template(app.data));
+
+      var devices = new DevicesView({
+        collection: app.collections.devices
+      });
+      this.$('.devices-container').append(devices.render().$el);
+      app.collections.devices.trigger('reset');
 
       var footer = new FooterView();
       this.$('.footer').append(footer.render().$el);

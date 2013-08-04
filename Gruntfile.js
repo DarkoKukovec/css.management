@@ -139,7 +139,14 @@ module.exports = function(grunt) {
     },
 
     nodemon: {
-      dev: {}
+      main: {
+        options: {
+          file: 'server.js',
+          args: ['-c', '.'],
+          ignoredFiles: ['.gitignore', 'README.md', '.git/**', '.sass-cache/**', 'public/**', 'node_modules/**'],
+          watchedExtensions: ['js']
+        }
+      }
     },
 
     concurrent: {

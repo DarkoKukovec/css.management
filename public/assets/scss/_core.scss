@@ -1,0 +1,79 @@
+body {
+  color: #000;
+  background-color: #eee;
+  font-size: 14px;
+  font-family: Arial, serif;
+
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 59px;
+    border-bottom: 1px solid #777;
+
+    .app-name {
+      font-size: 34px;
+      font-weight: bold;
+      padding: 9px 12px;
+      display: block;
+    }
+
+    .files {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 199px;
+      height: 20px;
+      border: solid #777;
+      border-width: 1px 0 0 1px;
+    }
+  }
+
+  .devices-container {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    bottom: 16px;
+    width: 199px;
+    border-right: 1px solid #777;
+  }
+
+  .styles-container {
+    position: absolute;
+    top: 60px;
+    left: 200px;
+    right: 200px;
+    bottom: 16px;
+    background-color: #fff;
+  }
+
+  .sidebar-container {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    bottom: 16px;
+    width: 199px;
+    border-left: 1px solid #777;
+  }
+
+  .footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 15px;
+    border-top: 1px solid #777;
+    font-size: 12px;
+
+    .icons {
+      margin-left: 200px;
+    }
+
+    .version {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+}
