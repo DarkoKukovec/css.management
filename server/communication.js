@@ -1,7 +1,5 @@
-var platform = require('platform');
-var crypto = require('crypto');
-
 if (!socket) {
+  console.log('Something went wrong!');
   return;
 }
 
@@ -10,39 +8,20 @@ var clients = {};
 
 socket.on('connection', function(client) {
 
-  client.on('clientInit', function(data) {
+  /**
+   * CLIENT
+  **/
+  client.on('client-init', function(data) {
     var id = data.id;
     client.clientID = id;
     var session = data.session;
 
     // Platform
-    data.platform = platform.parse(data.userAgent);
-    if (data.platform.os.family.split(' ')[0].toLowerCase() == 'windows') {
-      data.platform.os.family = data.platform.os.family.split(' ')[0];
-    }
-    data.platform.product = data.platform.product || '-';
+    data.platform = getPlatformInfo(data.userAgent);
 
     // Cache params
     for (var i = 0; i < data.style.length; i++) {
-      var name = data.style[i].name.split('?');
-      if (name.length > 1) {
-        if (cacheParams.indexOf('.') !== -1) {
-          data.style[i].name = name[0];
-        } else {
-          var params = name[1].split('&');
-          newParams = [];
-          for (var j = 0; j < params.length; j++) {
-            if (cacheParams.indexOf(params[j].split('=')[0]) == -1) {
-              newParams.push(params[j]);
-            }
-          }
-          if (newParams.length > 0) {
-            data.style[i].name = name[0] + '?' + newParams.join('&');
-          } else {
-            data.style[i].name = name[0];
-          }
-        }
-      }
+      removeParams(data.style[i]);
     }
 
     var hashes = {};
@@ -52,55 +31,68 @@ socket.on('connection', function(client) {
     clients[session][id] = {
       id: id,
       platform: data.platform,
-      sessions: [session],
       comm: client,
       data: data
     };
+    // Return the hashes to the client
+    client.emit('client-init', hashes);
+
     // Notify the manager
-    client.emit('clientInit', hashes);
     if (managers[session]) {
       managers[session].comm.emit('device-add', data);
     }
   });
 
-  client.on('modernizrInit', function(data) {
-    clients[data.session][data.id].modernizr = data;
-    // Notify the manager
+  // Change response from client to manager
+  client.on('change-response', function(data) {
+    if (managers[data.session]) {
+      managers[data.session].emmit('change-response', data);
+    }
   });
 
+  // client.on('modernizr-init', function(data) {
+  //   clients[data.session][data.id].modernizr = data;
+  //   // Notify the manager
+  // });
+
+  /**
+   * MANAGER
+   **/
+
   client.on('manager-init', function(data) {
-    // TODO Check if it already exists (id & session)
     var id = data.id;
     client.managerID = id;
     var session = data.session;
     clients[session] = clients[session] || {};
     managers[session] = {
       id: id,
-      sessions: [session],
       comm: client,
       data: data
     };
 
+    // Tell the manager about the active clients
     clients[session].each(function(cl) {
       client.emit('device-add', cl.data);
     });
 
-    client.emit('init', {
+    client.emit('manager-init', {
+      name: appName,
       version: version,
       modernizr: modernizr
     });
   });
 
-  client.on('change', function(data) {
+  // Change request from manager to client
+  client.on('change-request', function(data) {
     data.payload.each(function(payload, deviceId) {
       if (clients[data.session] && clients[data.session][deviceId]) {
-        clients[data.session][deviceId].comm.emit('change', payload);
+        clients[data.session][deviceId].comm.emit('change-request', payload);
       }
     });
   });
 
   client.on('disconnect', function(){
-    var id, i, session;
+    var id;
     // Check clients and managers and clear the necesary data
     if (client.managerID) {
       id = client.managerID;
@@ -123,40 +115,3 @@ socket.on('connection', function(client) {
     }
   });
 });
-
-function calculateHashes(style, parentHash, hashes, source) {
-  parentHash = parentHash || '';
-  for (var i = 0; i < style.length; i++) {
-
-    if (style[i].type == 'import') {
-      style[i].name = style[i].name.replace(/[\"\;]/g, '').trim();
-    }
-
-    var key = i + '$' + parentHash + '$' + style[i].name;
-    style[i].hash = hash(key);
-
-    if (style[i].type == 'file') {
-      source = style[i].source;
-    }
-    hashes[style[i].hash] = {
-      hash: style[i].hash,
-      parentHash: parentHash,
-      source: source,
-      path: style[i].path,
-      type: style[i].type
-    };
-
-    if (style[i].type == 'file' && style[i].name == 'inline') {
-      style[i].name = 'inline#' + parseInt(style[i].hash, 16).toString(36).substr(0, 6);
-    }
-    if (typeof style[i].value == 'object') {
-      calculateHashes(style[i].value, style[i].hash, hashes, source);
-    }
-  }
-}
-
-function hash(text) {
-  var shasum = crypto.createHash('sha1');
-  shasum.update(text);
-  return shasum.digest('hex');
-}

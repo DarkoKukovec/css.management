@@ -1,4 +1,5 @@
 version = 'v0.0.1';
+appName = 'styl.io';
 
 socket = null;
 modernizr = false;

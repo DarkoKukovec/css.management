@@ -27,10 +27,10 @@ for (var i = 0; i < process.argv.length; i++) {
   //   modernizr = true;
   // }
   if (p == '-h' || p == '--help') {
-    console.log('Distributed CSS manager');
+    console.log(appName);
     console.log('\t-h --help\tHelp');
     console.log('\t-v --version\tVersion');
-    console.log('\t-p --port\tThe port the server is running (default 3000)');
+    console.log('\t-p --port\tThe port the server is running (default ' + port + ')');
     console.log('\t-c --cacheParam\tName of the cache parameter in the CSS URL-s');
     console.log('\t\t\tIt will be ignored when comparing the URL-s');
     console.log('\t\t\tIt can be used multiple times to remove multiple params');
