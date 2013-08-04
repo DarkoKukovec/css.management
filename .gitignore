@@ -6,6 +6,6 @@ npm-debug.log
 *.swp
 *.out
 deploy/*
-assets/css/*
+public/assets/css/*
 .sass-cache/*
 .nodemonignore
