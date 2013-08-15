@@ -355,13 +355,6 @@ body {
       height: 20px;
       border: solid #777;
       border-width: 1px 0 0 1px; }
-  body .devices-container {
-    position: absolute;
-    top: 60px;
-    left: 0;
-    bottom: 16px;
-    width: 199px;
-    border-right: 1px solid #777; }
   body .styles-container {
     position: absolute;
     top: 60px;
@@ -390,3 +383,53 @@ body {
       position: absolute;
       bottom: 0;
       right: 0; }
+
+.devices-container {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  bottom: 16px;
+  width: 199px;
+  border-right: 1px solid #777; }
+  .devices-container .devices-list {
+    padding: 0;
+    margin: 0;
+    list-style: none; }
+    .devices-container .devices-list li {
+      display: block;
+      margin: 4px;
+      padding: 4px;
+      background-color: #ddd;
+      position: relative; }
+      .devices-container .devices-list li.disabled {
+        opacity: 0.5; }
+      .devices-container .devices-list li .device-edit {
+        display: none;
+        width: 16px;
+        height: 16px;
+        background-image: url(../images/settings.png);
+        position: absolute;
+        top: 8px;
+        right: 8px; }
+      .devices-container .devices-list li:hover .device-edit {
+        display: block; }
+      .devices-container .devices-list li .device-name {
+        font-weight: bold;
+        font-size: 18px; }
+      .devices-container .devices-list li .device-info {
+        padding: 4px 4px 4px 20px;
+        background-position: 0 4px;
+        background-size: 16px 16px;
+        background-repeat: no-repeat;
+        text-align: right; }
+        .devices-container .devices-list li .device-info.id-info {
+          background-image: url(../images/id.png); }
+        .devices-container .devices-list li .device-info.os-info {
+          background-image: url(../images/os.png); }
+        .devices-container .devices-list li .device-info.browser-info {
+          background-image: url(../images/browser.png); }
+    .devices-container .devices-list.slim .device-name {
+      font-size: 16px;
+      font-weight: normal; }
+    .devices-container .devices-list.slim .device-info {
+      display: none; }

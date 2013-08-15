@@ -3,6 +3,7 @@ define([
 
   'views/devices',
   // 'views/files',
+  // 'views/sidebar',
   'views/footer'
 ],
 
@@ -11,6 +12,7 @@ function(
 
     DevicesView,
     // FilesView,
+    // SidebarView,
     FooterView
   ) {
   'use strict';
@@ -25,6 +27,9 @@ function(
 
       var devices = new DevicesView({
         collection: app.collections.devices
+      });
+      devices.on('device:edit:item', function(model) {
+        this.trigger('device:edit', model);
       });
       this.$('.devices-container').append(devices.render().$el);
       app.collections.devices.trigger('reset');

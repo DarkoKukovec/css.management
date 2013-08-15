@@ -11,7 +11,8 @@ function(app) {
 
     events: {
       // TODO: Tap on selection checkbox - change selected
-      // TODO: Tap on the name - change the device name and save it to the localStorage
+      'change input[type=checkbox]': 'onCheckboxChange',
+      'click .device-edit': 'onDeviceEditClick'
     },
 
     initialize: function() {
@@ -34,6 +35,15 @@ function(app) {
       this.$el.html(this.template(data));
 
       return this;
+    },
+
+    onCheckboxChange: function() {
+      var checked = this.$('input[type=checkbox]').prop('checked');
+      this.$el[checked ? 'removeClass' : 'addClass']('disabled');
+    },
+
+    onDeviceEditClick: function() {
+      this.trigger('device:edit', this.model);
     }
 
   });

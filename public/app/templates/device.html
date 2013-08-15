@@ -2,3 +2,7 @@
   <input type="checkbox" id="device-<%= id %>-selection" <%= selection %> />
   <span class="device-name"><%= name %></span>
 </label>
+<div class="device-edit"></div>
+<div class="device-info id-info" title="Identificator"><%= id %></div>
+<div class="device-info os-info" title="Operating system"><%= platform.os.family %> <%= platform.os.version %></div>
+<div class="device-info browser-info" title="Browser"><%= platform.name %> <%= platform.version %></div>

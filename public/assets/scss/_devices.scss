@@ -1,0 +1,73 @@
+  .devices-container {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    bottom: 16px;
+    width: 199px;
+    border-right: 1px solid #777;
+
+    .devices-list {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+
+      li {
+        display: block;
+        margin: 4px;
+        padding: 4px;
+        background-color: #ddd;
+        position: relative;
+
+        &.disabled {
+          opacity: 0.5;
+        }
+
+        .device-edit {
+          display: none;
+          width: 16px;
+          height: 16px;
+          background-image: url(../images/settings.png);
+          position: absolute;
+          top: 8px;
+          right: 8px;
+        }
+
+        &:hover .device-edit {
+          display: block;
+        }
+
+        .device-name {
+          font-weight: bold;
+          font-size: 18px;
+        }
+        .device-info {
+          padding: 4px 4px 4px 20px;
+          background-position: 0 4px;
+          background-size: 16px 16px;
+          background-repeat: no-repeat;
+          text-align: right;
+
+          &.id-info {
+            background-image: url(../images/id.png);
+          }
+          &.os-info {
+            background-image: url(../images/os.png);
+          }
+          &.browser-info {
+            background-image: url(../images/browser.png);
+          }
+        }
+      }
+
+      &.slim {
+        .device-name {
+          font-size: 16px;
+          font-weight: normal;
+        }
+
+        .device-info {
+          display: none;
+        }
+      }
+    }
+  }

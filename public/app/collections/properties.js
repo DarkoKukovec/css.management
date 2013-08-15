@@ -10,5 +10,7 @@ function(
     model: PropertyModel
   });
 
+  // On change - send to devices
+
   return Properties;
 });

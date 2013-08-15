@@ -1,6 +1,8 @@
 define([
   'app',
 
+  'routers/dialogs',
+
   'collections/files',
   'collections/styles',
   'collections/devices',
@@ -11,6 +13,8 @@ define([
 
 function(
     app,
+
+    DialogsRouter,
 
     FilesCollection,
     StylesCollection,
@@ -32,6 +36,8 @@ function(
     initialize: function() {
       // TODO: Debugging
       window.app = app;
+
+      this.dialogs = new DialogsRouter();
 
       // Initialize stores
       app.collections.files = app.collections.files || new FilesCollection();
@@ -59,6 +65,7 @@ function(
       });
 
       this.mainView = new MainView();
+      this.mainView.on('device:edit', this.dialogs.editDevice, this);
       $('#main').html(this.mainView.render().$el);
     },
 

@@ -7,7 +7,10 @@ function(
   ) {
   'use strict';
   var Styles = Backbone.Collection.extend({
-    model: StyleModel
+    model: StyleModel,
+    merge: function(newStyles) {
+
+    }
   });
 
   return Styles;
