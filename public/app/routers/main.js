@@ -41,19 +41,19 @@ function(
     connect: function() {
       // Connection & listeners
       app.socket = io.connect(location.protocol + '//' + location.host);
-      app.socket.on('manager-init', $.proxy(app.router.onInit, this));
-      app.socket.on('device-add', $.proxy(app.router.onDeviceAdd, this));
-      app.socket.on('device-remove', $.proxy(app.router.onDeviceRemove, this));
+      app.socket.on('manager:init', $.proxy(app.router.onInit, this));
+      app.socket.on('device:add', $.proxy(app.router.onDeviceAdd, this));
+      app.socket.on('device:remove', $.proxy(app.router.onDeviceRemove, this));
       app.socket.on('disconnect', $.proxy(app.router.onDisconnect, this));
-      app.socket.on('change-response', $.proxy(app.router.onChangeResponse, this));
-      app.socket.on('property-check', $.proxy(app.router.onPropertyCheck, this));
+      app.socket.on('change:response', $.proxy(app.router.onChangeResponse, this));
+      app.socket.on('property:check', $.proxy(app.router.onPropertyCheck, this));
     },
 
     // Main view setup
     managerSetup: function(sessionId) {
       app.data.session = sessionId;
 
-      app.socket.emit('manager-init', {
+      app.socket.emit('manager:init', {
         id: app.data.id,
         session: app.data.session
       });

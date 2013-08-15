@@ -16,22 +16,22 @@
 ##Communication
 
 ### Manager setup
-1. Manager to server - manager-init
-2. Server to manager - manager-init
-3. Server to manager - device-add (for every active client)
+1. Manager to server - manager:init
+2. Server to manager - manager:init
+3. Server to manager - device:add (for every active client)
 
 ### Client setup
-1. Client to server - client-init
-2. Server to client - client-init
-3. Server to manager - device-add (if manager is active)
+1. Client to server - client:init
+2. Server to client - client:init
+3. Server to manager - device:add (if manager is active)
 
 ### Property check
-1. Manager to client - property-check (list of values)
-2. Client to manager - property-check (list of values)
+1. Manager to client - property:check (list of values)
+2. Client to manager - property:check (list of values)
 
 ### Change request
-1. Manager to client - change-request
-2. Client to manager - change-response
+1. Manager to client - change:request
+2. Client to manager - change:response
 
 ### Client disconnected
-1. Server to manager - device-remove
+1. Server to manager - device:remove

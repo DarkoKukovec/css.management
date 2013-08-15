@@ -38,7 +38,7 @@ StylIO = (function(window) {
     },
     serverInit: function() {
       var styling = CSS.getCSS();
-      Comm.send('client-init', {
+      Comm.send('client:init', {
         id: Utils.getID(),
         session: Utils.getSession(),
         userAgent: window.navigator.userAgent,
@@ -46,11 +46,11 @@ StylIO = (function(window) {
       });
     },
     setupListeners: function() {
-      Comm.on('client-init', function(data) {
+      Comm.on('client:init', function(data) {
         window.styleData = styleData = data;
       });
 
-      Comm.on('change', function(data) {
+      Comm.on('change:request', function(data) {
         data = [].concat(data);
         for (var i = 0; i < data.length; i++) {
           var node;

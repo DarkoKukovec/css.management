@@ -11,7 +11,7 @@ socket.on('connection', function(client) {
   /**
    * CLIENT
   **/
-  client.on('client-init', function(data) {
+  client.on('client:init', function(data) {
     var id = data.id;
     client.clientID = id;
     var session = data.session;
@@ -35,22 +35,22 @@ socket.on('connection', function(client) {
       data: data
     };
     // Return the hashes to the client
-    client.emit('client-init', hashes);
+    client.emit('client:init', hashes);
 
     // Notify the manager
     if (managers[session]) {
-      managers[session].comm.emit('device-add', data);
+      managers[session].comm.emit('device:add', data);
     }
   });
 
   // Change response from client to manager
-  client.on('change-response', function(data) {
+  client.on('change:response', function(data) {
     if (managers[data.session]) {
-      managers[data.session].emmit('change-response', data);
+      managers[data.session].emmit('change:response', data);
     }
   });
 
-  // client.on('modernizr-init', function(data) {
+  // client.on('modernizr:init', function(data) {
   //   clients[data.session][data.id].modernizr = data;
   //   // Notify the manager
   // });
@@ -59,7 +59,7 @@ socket.on('connection', function(client) {
    * MANAGER
    **/
 
-  client.on('manager-init', function(data) {
+  client.on('manager:init', function(data) {
     var id = data.id;
     client.managerID = id;
     var session = data.session;
@@ -72,10 +72,10 @@ socket.on('connection', function(client) {
 
     // Tell the manager about the active clients
     clients[session].each(function(cl) {
-      client.emit('device-add', cl.data);
+      client.emit('device:add', cl.data);
     });
 
-    client.emit('manager-init', {
+    client.emit('manager:init', {
       name: appName,
       version: version,
       modernizr: modernizr
@@ -83,10 +83,10 @@ socket.on('connection', function(client) {
   });
 
   // Change request from manager to client
-  client.on('change-request', function(data) {
+  client.on('change:request', function(data) {
     data.payload.each(function(payload, deviceId) {
       if (clients[data.session] && clients[data.session][deviceId]) {
-        clients[data.session][deviceId].comm.emit('change-request', payload);
+        clients[data.session][deviceId].comm.emit('change:request', payload);
       }
     });
   });
@@ -108,7 +108,7 @@ socket.on('connection', function(client) {
         if (clientList[id]) {
           delete clientList[id];
           if (managers[session]) {
-            managers[session].comm.emit('device-remove', id);
+            managers[session].comm.emit('device:remove', id);
           }
         }
       });
