@@ -71,6 +71,13 @@ module.exports = function(grunt) {
         ],
         dest: deployFolder + '<%= pkg.name %>.js',
         separator: ';'
+      },
+      beacon: {
+        src: [
+          'beacon/**/*.js'
+        ],
+        dest: 'public/beacon.client-build.js',
+        separator: ';'
       }
     },
 
@@ -104,6 +111,11 @@ module.exports = function(grunt) {
       app: {
         files: 'public/assets/scss/**/*.scss',
         tasks: ['sass']
+      },
+      beacon: {
+        files: 'beacon/**/*.js',
+        tasks: ['concat:beacon']
+        // TODO: Wrap
       }
     },
 
@@ -143,7 +155,7 @@ module.exports = function(grunt) {
         options: {
           file: 'server.js',
           args: ['-c', '.'],
-          ignoredFiles: ['.gitignore', 'README.md', '.git/**', '.sass-cache/**', 'public/**', 'node_modules/**'],
+          ignoredFiles: ['.gitignore', 'README.md', '.git/**', '.sass-cache/**', 'beacon/**', 'public/**', 'node_modules/**'],
           watchedExtensions: ['js']
         }
       }
@@ -151,7 +163,7 @@ module.exports = function(grunt) {
 
     concurrent: {
       target: {
-        tasks: ['nodemon', 'watch'],
+        tasks: ['nodemon', 'watch', 'watch:beacon'],
         options: {
           logConcurrentOutput: true
         }

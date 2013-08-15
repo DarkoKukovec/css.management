@@ -9,3 +9,4 @@ deploy/*
 public/assets/css/*
 .sass-cache/*
 .nodemonignore
+public/beacon.client-build.js

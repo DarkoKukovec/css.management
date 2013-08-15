@@ -21,21 +21,18 @@ socket.on('connection', function(client) {
 
     // Cache params
     for (var i = 0; i < data.style.length; i++) {
-      removeParams(data.style[i]);
+      if (data.style[i].type === -2) {
+        removeParams(data.style[i]);
+      }
     }
 
-    var hashes = {};
-
-    calculateHashes(data.style, null, hashes);
+    normalizeNodes(data.style);
     clients[session] = clients[session] || {};
     clients[session][id] = {
       id: id,
-      platform: data.platform,
       comm: client,
       data: data
     };
-    // Return the hashes to the client
-    client.emit('client:init', hashes);
 
     // Notify the manager
     if (managers[session]) {
@@ -78,7 +75,8 @@ socket.on('connection', function(client) {
     client.emit('manager:init', {
       name: appName,
       version: version,
-      modernizr: modernizr
+      modernizr: modernizr,
+      clients: clients[session].length
     });
   });
 

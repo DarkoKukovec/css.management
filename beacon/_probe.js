@@ -1,0 +1,3 @@
+var Probe = {
+  check: function() {}
+};

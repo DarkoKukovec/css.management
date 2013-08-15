@@ -1,5 +1,4 @@
 var platform = require('platform');
-var crypto = require('crypto');
 
 Object.prototype.each = function(callback) {
   for (var key in this) {
@@ -40,39 +39,18 @@ getPlatformInfo = function(userAgent) {
   return platformInfo;
 };
 
-calculateHashes = function(style, parentHash, hashes, source) {
-  parentHash = parentHash || '';
+normalizeNodes = function(style) {
   for (var i = 0; i < style.length; i++) {
 
     if (style[i].type == 'import') {
       style[i].name = style[i].name.replace(/[\"\;]/g, '').trim();
     }
 
-    var key = i + '$' + parentHash + '$' + style[i].name;
-    style[i].hash = hash(key);
-
-    if (style[i].type == 'file') {
-      source = style[i].source;
-    }
-    hashes[style[i].hash] = {
-      hash: style[i].hash,
-      parentHash: parentHash,
-      source: source,
-      path: style[i].path,
-      type: style[i].type
-    };
-
-    if (style[i].type == 'file' && style[i].name == 'inline') {
+    if (style[i].type == -3) {
       style[i].name = 'inline#' + parseInt(style[i].hash, 16).toString(36).substr(0, 6);
     }
-    if (typeof style[i].value == 'object') {
-      calculateHashes(style[i].value, style[i].hash, hashes, source);
+    if ('children' in style[i]) {
+      normalizeNodes(style[i].children);
     }
   }
 };
-
-function hash(text) {
-  var shasum = crypto.createHash('sha1');
-  shasum.update(text);
-  return shasum.digest('hex');
-}
