@@ -2,9 +2,9 @@ define([
   'app',
 
   'routers/dialogs',
+  'routers/devices',
 
-  'collections/files',
-  'collections/styles',
+  'collections/StyleNodes',
   'collections/devices',
 
   'views/main',
@@ -15,9 +15,9 @@ function(
     app,
 
     DialogsRouter,
+    DevicesRouter,
 
-    FilesCollection,
-    StylesCollection,
+    StyleNodesCollection,
     DevicesCollection,
 
     MainView,
@@ -38,9 +38,10 @@ function(
       window.app = app;
 
       this.dialogs = new DialogsRouter();
+      this.devices = new DevicesRouter();
 
       // Initialize stores
-      app.collections.files = app.collections.files || new FilesCollection();
+      app.collections.files = app.collections.files || new StyleNodesCollection();
       app.collections.devices = app.collections.devices || new DevicesCollection();
     },
 
@@ -48,8 +49,8 @@ function(
       // Connection & listeners
       app.socket = io.connect(location.protocol + '//' + location.host);
       app.socket.on('manager:init', $.proxy(app.router.onInit, this));
-      app.socket.on('device:add', $.proxy(app.router.onDeviceAdd, this));
-      app.socket.on('device:remove', $.proxy(app.router.onDeviceRemove, this));
+      app.socket.on('device:add', $.proxy(app.router.devices.onAdd, this));
+      app.socket.on('device:remove', $.proxy(app.router.devices.onRemove, this));
       app.socket.on('disconnect', $.proxy(app.router.onDisconnect, this));
       app.socket.on('change:response', $.proxy(app.router.onChangeResponse, this));
       app.socket.on('property:check', $.proxy(app.router.onPropertyCheck, this));
@@ -99,39 +100,6 @@ function(
     onPropertyCheck: function(data) {
       console.log('Property check', data);
       // TODO: When all clients respond, figure out the right property order
-    },
-
-    onDeviceAdd: function(data) {
-      console.log('New device', data);
-      var device = app.collections.devices.get(data.id);
-      if (device) {
-        device.set('connected', true);
-      } else {
-        app.collections.devices.add({
-          id: data.id,
-          platform: data.platform,
-          connected: true
-        });
-      }
-
-      // Should this be neccessary?
-      app.collections.devices.trigger('reset');
-
-      // TODO: Add the device styles to the current styles.
-      // When going trough the styles, references to the device have to be removed
-      // for every style that this device doesn't contain anymore
-    },
-
-    onDeviceRemove: function(deviceId) {
-      console.log('Device gone', deviceId);
-      app.collections.devices.get(deviceId).set('connected', false);
-
-      // Should this be neccessary?
-      app.collections.devices.trigger('reset');
-
-      // TODO: Go trough all the styles and lower the reference counter
-      // for every item that references the disconnected device
-      // The reference has to stay in order to be able to reapply the styles on refresh
     },
 
     onDisconnect: function() {

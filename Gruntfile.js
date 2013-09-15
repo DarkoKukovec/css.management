@@ -114,7 +114,7 @@ module.exports = function(grunt) {
       },
       beacon: {
         files: 'beacon/**/*.js',
-        tasks: ['concat:beacon']
+        tasks: ['concat:beacon', 'uglify:beacon']
         // TODO: Wrap
       }
     },
@@ -145,6 +145,13 @@ module.exports = function(grunt) {
         files: {
           '<%= concat.dist.dest %>': [
             '<%= concat.dist.dest %>'
+          ]
+        }
+      },
+      beacon: {
+        files: {
+          'public/beacon.client-build.js': [
+            'public/beacon.client-build.min.js'
           ]
         }
       }

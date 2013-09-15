@@ -5,8 +5,9 @@ define([
   'underscore',
   'backbone',
   'I18n',
-  'io'
+  'io',
   //plugins
+  'listview'
 ],
 
 function(
@@ -53,6 +54,10 @@ function(
     setSettings: function(name, value) {
       app.settings[name] = value;
       localStorage[name] = value;
+    },
+    removeSettings: function(name) {
+      delete app.settings[name];
+      localStorage.removeItem(name);
     },
     getId: function() {
       if (!app.data.id) {

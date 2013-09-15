@@ -17,7 +17,9 @@ requirejs.config({
     // Internationalization
     I18n: '../assets/javascript/libs/I18n',
 
-    io: '../socket.io/socket.io.js'
+    io: '../socket.io/socket.io.js',
+
+    listview: '../assets/javascript/plugins/backbone.listview'
   },
 
   shim: {
@@ -28,6 +30,10 @@ requirejs.config({
 
     jquery: {
       exports: '$'
+    },
+
+    listview: {
+      deps: ['backbone']
     }
   }
 

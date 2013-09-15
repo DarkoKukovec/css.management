@@ -12,7 +12,11 @@ function(
         this.set('name', this.get('nickname') || this.get('id'));
       });
       this.on('change:nickname', function() {
-        app.setSettings('device-' + this.get('id'), this.get('nickname'));
+        if (this.get('nickname')) {
+          app.setSettings('device-' + this.get('id'), this.get('nickname'));
+        } else {
+          app.removeSettings('device-' + this.get('id'));
+        }
         this.set('name', this.get('nickname') || this.get('id'));
       });
       this.set('nickname', app.getSettings('device-' + this.get('id')));

@@ -1,7 +1,7 @@
 define([
   'app',
 
-  'views/devices',
+  'views/device',
   // 'views/files',
   // 'views/sidebar',
   'views/footer'
@@ -10,7 +10,7 @@ define([
 function(
     app,
 
-    DevicesView,
+    DeviceView,
     // FilesView,
     // SidebarView,
     FooterView
@@ -25,14 +25,18 @@ function(
 
       this.$el.html(this.template(app.data));
 
-      var devices = new DevicesView({
-        collection: app.collections.devices
+      var ListView = Backbone.ListView.extend({});
+
+      var devices = new ListView({
+        tagName: 'ul',
+        className: 'devices-list',
+        collection: app.collections.devices,
+        itemView: DeviceView
       });
-      devices.on('device:edit:item', function(model) {
+      devices.on('item:device:edit', function(view, model) {
         this.trigger('device:edit', model);
-      });
+      }, this);
       this.$('.devices-container').append(devices.render().$el);
-      app.collections.devices.trigger('reset');
 
       var footer = new FooterView();
       this.$('.footer').append(footer.render().$el);

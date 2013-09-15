@@ -10,7 +10,6 @@ function(app) {
     template: app.fetchTemplate('device'),
 
     events: {
-      // TODO: Tap on selection checkbox - change selected
       'change input[type=checkbox]': 'onCheckboxChange',
       'click .device-edit': 'onDeviceEditClick'
     },
