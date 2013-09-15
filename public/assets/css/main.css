@@ -355,6 +355,18 @@ body {
       height: 20px;
       border: solid #777;
       border-width: 1px 0 0 1px; }
+      body .header .files .file-tabs {
+        margin: 0;
+        padding: 0;
+        list-style: none; }
+        body .header .files .file-tabs .file-tab {
+          display: block;
+          padding: 2px 10px;
+          float: left;
+          border-right: 1px solid #777; }
+          body .header .files .file-tabs .file-tab.active {
+            color: #fff;
+            background-color: #777; }
   body .styles-container {
     position: absolute;
     top: 60px;

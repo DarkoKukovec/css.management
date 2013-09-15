@@ -54,7 +54,10 @@ function(
       // Update the basic attributes, add the device
       var data = _.omit(style, ['hash', 'children']);
       this.set(data);
-      this.get('devices')[device.get('id')] = style.hash;
+      var devices = this.get('devices');
+      devices[device.get('id')] = style.hash;
+      // The change event isn't triggered?
+      this.set('devices', devices).trigger('change:devices');
 
       if (style.children) {
         // Update the children
@@ -64,7 +67,10 @@ function(
 
     removeDevice: function(device) {
       // Remove the device from the node
-      delete this.get('devices')[device.get('id')];
+      var devices = this.get('devices');
+      delete devices[device.get('id')];
+      // The change event isn't triggered?
+      this.set('devices', devices).trigger('change:devices');
 
       if (this.get('children')) {
         // Remove the device from children

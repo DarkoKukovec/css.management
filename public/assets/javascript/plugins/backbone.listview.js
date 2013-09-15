@@ -12,7 +12,7 @@
       options = options || {};
 
       this.setupListView(options);
-      this.setupListeners();
+      // this.setupListeners();
       //super call - default Backbone magic
       Backbone.View.call(this, options);
     },
@@ -44,7 +44,7 @@
       //remove previous items if present
       this.removeAllItems();
       //reinit all listeners
-      // this.setupListeners();
+      this.setupListeners();
       //add new items
       this.collection.each(function(model) {
         this.addSingleItem(model);
