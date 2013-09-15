@@ -47,7 +47,7 @@ normalizeNodes = function(style) {
     }
 
     if (style[i].type == -3) {
-      style[i].name = 'inline#' + parseInt(style[i].hash, 16).toString(36).substr(0, 6);
+      style[i].name = 'inline#' + style[i].hash.substr(0, 6);
     }
     if ('children' in style[i]) {
       normalizeNodes(style[i].children);

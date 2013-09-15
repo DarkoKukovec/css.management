@@ -1,6 +1,6 @@
 Styles.nodes.style = {
   get: function(node, parent) {
-    Utils.log('style', node);
+    // Utils.log('style', node);
     var style = {
       ref: node,
       type: node.type,

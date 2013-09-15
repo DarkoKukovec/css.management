@@ -1,4 +1,4 @@
-/*! styl.io - v0.0.1 - 2013-08-15
+/*! styl.io - v0.0.1 - 2013-09-15
 * Copyright (c) 2013 ; Licensed  */
 var Change = {
   exec: function(data) {}
@@ -72,6 +72,10 @@ var Styles = {
       }
 
       var key = i + '$' + node.parentHash + '$' + node.name;
+      if (node.type == -3 && node.children.length) {
+        // TODO: Find a way to differentiate inline stylesheets (type == -3)
+        key = '$' + node.children[0].name;
+      }
       node.hash = CryptoJS.SHA1(key).toString();
       Styles.map[node.hash] = node;
 
@@ -164,7 +168,7 @@ Styles.types = {
 };
 Styles.nodes.media = {
   get: function(node, parent) {
-    Utils.log('media', node);
+    // Utils.log('media', node);
     var media = {
       ref: node,
       type: node.type,
@@ -186,7 +190,7 @@ Styles.nodes.media = {
 };
 Styles.nodes.style = {
   get: function(node, parent) {
-    Utils.log('style', node);
+    // Utils.log('style', node);
     var style = {
       ref: node,
       type: node.type,

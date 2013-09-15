@@ -22,6 +22,7 @@ function(
       if (node.type != this.get('type')) {
         return 0;
       }
+      // TODO: Find a way to differentiate inline stylesheets (type == -3)
       if (node.name != this.get('name')) {
         return 0;
       }

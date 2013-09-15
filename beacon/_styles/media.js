@@ -1,6 +1,6 @@
 Styles.nodes.media = {
   get: function(node, parent) {
-    Utils.log('media', node);
+    // Utils.log('media', node);
     var media = {
       ref: node,
       type: node.type,

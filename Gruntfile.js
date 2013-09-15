@@ -114,7 +114,7 @@ module.exports = function(grunt) {
       },
       beacon: {
         files: 'beacon/**/*.js',
-        tasks: ['concat:beacon', 'uglify:beacon']
+        tasks: ['concat:beacon']
         // TODO: Wrap
       }
     },

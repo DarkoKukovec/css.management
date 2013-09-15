@@ -16,6 +16,10 @@ var Styles = {
       }
 
       var key = i + '$' + node.parentHash + '$' + node.name;
+      if (node.type == -3 && node.children.length) {
+        // TODO: Find a way to differentiate inline stylesheets (type == -3)
+        key = '$' + node.children[0].name;
+      }
       node.hash = CryptoJS.SHA1(key).toString();
       Styles.map[node.hash] = node;
 
