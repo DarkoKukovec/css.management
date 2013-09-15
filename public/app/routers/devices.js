@@ -35,7 +35,7 @@ function(
 
       // for every item that references the disconnected device
       // The reference has to stay in order to be able to reapply the styles on refresh
-      app.collections.files.updateStyles(device, device.get('style'));
+      app.collections.files.removeStyles(device, device.get('style'));
     }
 
   });

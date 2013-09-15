@@ -41,16 +41,10 @@ function(
     },
 
     removeStyles: function(device, styles) {
-      for (var i = 0; i < styles.length; i++) {
-        for (var j = 0; j < this.size(); j++) {
-          var node = this.at(j);
-          var diff = node.compare(styles[i]);
-          if (diff == 2) {
-            // Remove the device from the style
-            node.removeDevice(device);
-            break;
-          }
-        }
+      for (var j = 0; j < this.size(); j++) {
+        // Remove the device from the style
+        var node = this.at(j);
+        node.removeDevice(device);
       }
     },
 

@@ -66,9 +66,9 @@ function(
       // Remove the device from the node
       delete this.get('devices')[device.get('id')];
 
-      if (style.children) {
+      if (this.get('children')) {
         // Remove the device from children
-        this.get('children').updateStyles(device, style.children);
+        this.get('children').removeStyles(device);
       }
     }
   });
