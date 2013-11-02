@@ -93,9 +93,10 @@
         this.trigger.apply(this, params);
       });
 
-      this.listenTo(view.model, 'change', function() {
-        view.render();
-      });
+      // TODO: Figure out an alternative - this way the view rerenders every time the user changes a value
+      // this.listenTo(view.model, 'change', function() {
+      //   view.render();
+      // });
     },
 
     getViewByModel: function(model) {

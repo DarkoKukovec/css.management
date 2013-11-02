@@ -48,6 +48,8 @@ function(
         children.updateStyles(device, style.children);
         this.set('children', children);
       }
+      this.on('change:name', this.onNameChange, this);
+      this.on('change:value', this.onValueChange, this);
     },
 
     updateStyle: function(style, device) {
@@ -76,6 +78,14 @@ function(
         // Remove the device from children
         this.get('children').removeStyles(device);
       }
+    },
+
+    onNameChange: function(model, value) {
+      console.log('name', value);
+    },
+
+    onValueChange: function(model, value) {
+      console.log('value', value);
     }
   });
 

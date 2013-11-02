@@ -31,6 +31,12 @@ function(
     getParameterByName: getParameterByName
   };
 
+  $(document).on('keyup', '.auto-size', app.autoSize);
+  $(document).on('keydown', '.auto-size', app.autoSize);
+  $(document).on('focus', '.auto-size', function() {
+    this.select();
+  });
+
   I18n.init({
     locales: ['en', 'hr'],
     defaultLocale: 'en',

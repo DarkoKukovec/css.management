@@ -1,3 +1,24 @@
+@font-face {
+    font-family: 'DejaVuMono';
+    src: url('../fonts/DejaVuSansMono-webfont.eot');
+    src: url('../fonts/DejaVuSansMono-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/DejaVuSansMono-webfont.woff') format('woff'),
+         url('../fonts/DejaVuSansMono-webfont.ttf') format('truetype'),
+         url('../fonts/DejaVuSansMono-webfont.svg#dejavu_sans_monobook') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'DejaVuMono';
+    src: url('../fonts/DejaVuSansMono-Bold-webfont.eot');
+    src: url('../fonts/DejaVuSansMono-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/DejaVuSansMono-Bold-webfont.woff') format('woff'),
+         url('../fonts/DejaVuSansMono-Bold-webfont.ttf') format('truetype'),
+         url('../fonts/DejaVuSansMono-Bold-webfont.svg#dejavu_sans_monobold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
 body {
   color: #000;
   background-color: #eee;
@@ -55,6 +76,16 @@ body {
     right: 200px;
     bottom: 16px;
     background-color: #fff;
+
+    > .style-item {
+      position: absolute;
+      padding-top: 8px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: auto;
+    }
   }
 
   .sidebar-container {

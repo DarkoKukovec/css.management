@@ -28,8 +28,17 @@ function(
       defaults: {
         'language': 'en'
       }
+    },
+    types: {
+      '-3': 'inline-style',
+      '-2': 'file-style',
+      '-1': 'property',
+      1: 'style',
+      4: 'media'
     }
   };
+
+  var sizer = $('.sizer');
 
   _.extend(app, {
     fetchTemplate: function(path) {
@@ -70,6 +79,15 @@ function(
         }
       }
       return app.data.id;
+    },
+    autoSize: function($el) {
+      if ($el.target) {
+        $el = $(this);
+      }
+      if (!$el.length) {
+        return;
+      }
+      $el.width($el.val().length * 7);
     }
   });
 

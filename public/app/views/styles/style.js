@@ -10,13 +10,14 @@ function(
     StyleView
   ) {
   'use strict';
-  var MediaItem = Backbone.View.extend({
-    className: 'node list-node node-media',
-    template: app.fetchTemplate('styles/media'),
+  var StyleItem = Backbone.View.extend({
+    className: 'node list-node node-style',
+    template: app.fetchTemplate('styles/style'),
 
     render: function() {
       var me = this;
       var data = this.model.toJSON();
+      data.name = data.name.replace(/"/g, '\\"');
 
       var ListView = Backbone.ListView.extend({});
 
@@ -40,5 +41,5 @@ function(
     }
   });
 
-  return MediaItem;
+  return StyleItem;
 });

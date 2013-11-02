@@ -1,0 +1,29 @@
+ul.style-item {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: "DejaVuMono", sans-serif;
+  font-size: 12px;
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.node {
+  padding-left: 10px;
+}
+
+.node-style-name, .node-media-name, .node-property-name, .node-property-value {
+  border: none;
+  background: transparent;
+}
+
+.node-property > .node-name input {
+  color: #C41C16;
+}
+
+.node-style > .node-name input {
+  max-width: 95%;
+}

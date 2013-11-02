@@ -4,7 +4,8 @@ define([
   'views/device',
   'views/files',
   // 'views/sidebar',
-  'views/footer'
+  'views/footer',
+  'views/styles/main'
 ],
 
 function(
@@ -13,12 +14,20 @@ function(
     DeviceView,
     FileTabView,
     // SidebarView,
-    FooterView
+    FooterView,
+    StyleView
   ) {
   'use strict';
   var Main = Backbone.View.extend({
     className: 'main-container',
     template: app.fetchTemplate('main'),
+
+    initialize: function() {
+      this.listenTo(app.collections.files, 'add', this.setActiveFile, this);
+    },
+
+    activeFile: null,
+    styles: {},
 
     render: function() {
       var me = this;
@@ -29,6 +38,7 @@ function(
 
       this.showDevices(ListView);
       this.showFileTabs(ListView);
+      this.showFileContent();
 
       var footer = new FooterView();
       this.$('.footer').append(footer.render().$el);
@@ -60,8 +70,35 @@ function(
       this.$('.files').append(fileTabs.render().$el);
     },
 
-    showFileContent: function(tabView, model) {
+    setActiveFile: function(model) {
+      if (!this.activeFile) {
+        this.showFileContent(model);
+      }
+    },
 
+    showFileContent: function(model) {
+      if (!model) {
+        // Set first as active
+        model = app.collections.files.first();
+      } else if (model && model.model) {
+        model = model.model;
+      }
+      if (model) {
+        if (!this.styles[model.get('hash')]) {
+          console.log('init')
+          var ListView = Backbone.ListView.extend({});
+          this.styles[model.get('hash')] = new ListView({
+            tagName: 'ul',
+            className: 'style-item',
+            collection: model.get('children'),
+            itemView: StyleView
+          });
+          this.$('.styles-container').append(this.styles[model.get('hash')].render().$el);
+        }
+        this.$('.styles-container > .style-item').hide();
+        this.styles[model.get('hash')].$el.show();
+        this.activeFile = model;
+      }
     },
 
     cleanup: function() {
