@@ -19,9 +19,9 @@ Styles.nodes.properties = {
     var parent = Styles.map[data.parentHash].ref;
     var style = parent.style || parent.cssStyle;
     if (style.removeProperty) {
-      style.removeProperty(data.name);
+      style.removeProperty(data.oldName);
     } else {
-      style[Utils.toCamelCase(data.name)] = null;
+      style[Utils.toCamelCase(data.oldName)] = null;
     }
     if (style.setProperty) {
       style.setProperty(data.name, data.value);

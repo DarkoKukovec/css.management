@@ -95,6 +95,7 @@ function(
             hash: hash,
             parentHash: model.parentNode.get('devices')[device],
             type: model.get('type'),
+            oldName: model.previous('name'),
             name: model.get('name'),
             value: model.get('value'),
             action: 'rename'

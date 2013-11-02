@@ -6,7 +6,7 @@ npm-debug.log
 *.swp
 *.out
 deploy/*
-public/assets/css/*
+public/assets/css/main.css
 .sass-cache/*
 .nodemonignore
 public/beacon.client-build.js
