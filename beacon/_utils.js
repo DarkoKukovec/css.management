@@ -61,5 +61,14 @@ var Utils = {
     } else {
       alert([].concat(arguments).join(' '));
     }
+  },
+  toCamelCase: function(property) {
+    var p = property.split('-');
+    var prop = p.shift();
+    while(p.length) {
+      var part = p.shift();
+      prop += part.charAt(0).toUpperCase() + part.substr(1);
+    }
+    return prop;
   }
 };

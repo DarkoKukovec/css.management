@@ -9,7 +9,7 @@ function(
   var StyleNodes = Backbone.Collection.extend({
     model: StyleNode,
 
-    updateStyles: function(device, styles) {
+    updateStyles: function(device, styles, parent) {
       var lastAddedIndex = -1;
       for (var i = 0; i < styles.length; i++) {
         var found = 0;
@@ -35,7 +35,7 @@ function(
         if (found === 0) {
           // Add a new node at lastAddedIndex + 1
           lastAddedIndex++;
-          this.addAt(lastAddedIndex, styles[i], device);
+          this.addAt(lastAddedIndex, styles[i], device, parent);
         }
       }
     },
@@ -48,9 +48,10 @@ function(
       }
     },
 
-    addAt: function(index, target, device) {
+    addAt: function(index, target, device, parent) {
       var item = new StyleNode({hash: target.hash});
       item.init(target, device, StyleNodes);
+      item.parentNode = parent;
       this.add(item, {at: index});
     }
   });

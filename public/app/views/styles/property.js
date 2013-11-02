@@ -11,7 +11,7 @@ function(
     template: app.fetchTemplate('styles/property'),
 
     events: {
-      'keyup .node-property-name': 'onNameChange',
+      'change .node-property-name': 'onNameChange',
       'keyup .node-property-value': 'onValueChange'
     },
 

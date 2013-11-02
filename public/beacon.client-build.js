@@ -1,7 +1,10 @@
 /*! styl.io - v0.0.1 - 2013-11-02
 * Copyright (c) 2013 ; Licensed  */
 var Change = {
-  exec: function(data) {}
+  exec: function(data) {
+    // changeId, hash, parentHash, type, name, value, action
+    Styles.nodes[Styles.types.list[data.type]][data.action](data);
+  }
 };
 var Connection = {
   socket: null,
@@ -101,6 +104,45 @@ Styles.nodes.properties = {
     }
 
     return properties;
+  },
+  rename: function(data) {
+    var parent = Styles.map[data.parentHash].ref;
+    var style = parent.style || parent.cssStyle;
+    if (style.removeProperty) {
+      style.removeProperty(data.name);
+    } else {
+      style[Utils.toCamelCase(data.name)] = null;
+    }
+    if (style.setProperty) {
+      style.setProperty(data.name, data.value);
+    } else {
+      style[Utils.toCamelCase(data.name)] = data.value;
+    }
+    var next = style.getPropertyValue ? style.getPropertyValue(data.name) : style[Utils.toCamelCase(data.name)];
+    Connection.send('change:response', {
+      hash: data.hash,
+      data: data,
+      newValue: next,
+      change: !!next
+    });
+  },
+  change: function(data) {
+    var parent = Styles.map[data.parentHash].ref;
+    var style = parent.style || parent.cssStyle;
+    var prev = style.getPropertyValue ? style.getPropertyValue(data.name) : style[Utils.toCamelCase(data.name)];
+    if (style.setProperty) {
+      style.setProperty(data.name, data.value);
+    } else {
+      style[Utils.toCamelCase(data.name)] = data.value;
+    }
+    var next = style.getPropertyValue ? style.getPropertyValue(data.name) : style[Utils.toCamelCase(data.name)];
+    Connection.send('change:response', {
+      hash: data.hash,
+      data: data,
+      oldValue: prev,
+      newValue: next,
+      change: prev !== next
+    });
   }
 };
 Styles.sheets = {
@@ -266,6 +308,15 @@ var Utils = {
     } else {
       alert([].concat(arguments).join(' '));
     }
+  },
+  toCamelCase: function(property) {
+    var p = property.split('-');
+    var prop = p.shift();
+    while(p.length) {
+      var part = p.shift();
+      prop += part.charAt(0).toUpperCase() + part.substr(1);
+    }
+    return prop;
   }
 };
 Startup.init();
