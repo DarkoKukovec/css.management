@@ -260,8 +260,7 @@ var Utils = {
     return id;
   },
   getSession: function() {
-    var url = document.getElementById('StylIO-beacon').src.split('#');
-    return url.length > 1 ? url[1] : '';
+    return window.appSession;
   },
   getCookie: function(name) {
     var cookies = document.cookie.split(';');
