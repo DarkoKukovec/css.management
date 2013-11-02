@@ -481,6 +481,12 @@ ul.style-item {
 .node {
   padding-left: 10px; }
 
+.list-node {
+  margin-bottom: 10px; }
+
+li:last-child > .list-node {
+  margin: 0; }
+
 .node-style-name, .node-media-name, .node-property-name, .node-property-value {
   border: none;
   background: transparent; }
@@ -490,3 +496,12 @@ ul.style-item {
 
 .node-style > .node-name input {
   max-width: 95%; }
+
+.color-node .node-color-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 1px;
+  margin: 3px 0 -2px -4px;
+  border: 1px solid #ACACAC; }

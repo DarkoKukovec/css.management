@@ -85,7 +85,6 @@ function(
       }
       if (model) {
         if (!this.styles[model.get('hash')]) {
-          console.log('init')
           var ListView = Backbone.ListView.extend({});
           this.styles[model.get('hash')] = new ListView({
             tagName: 'ul',
