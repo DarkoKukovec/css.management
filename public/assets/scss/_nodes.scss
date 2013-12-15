@@ -47,3 +47,13 @@ li:last-child > .list-node {
     border: 1px solid #ACACAC;
   }
 }
+
+.important-toggle {
+  opacity: 0.2;
+  cursor: pointer;
+
+  &.important-on {
+    opacity: 1;
+    color: #C41C16;
+  }
+}

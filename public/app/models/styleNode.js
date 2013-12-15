@@ -50,6 +50,7 @@ function(
       }
       this.on('change:name', this.onNameChange, this);
       this.on('change:value', this.onValueChange, this);
+      this.on('change:important', this.onValueChange, this);
     },
 
     updateStyle: function(style, device) {
@@ -109,10 +110,10 @@ function(
       });
     },
 
-    onValueChange: function(model, value) {
+    onValueChange: function(model) {
       // TODO: Try to change the value for the properties before this with the same name
-      // TODO: Add a ahndler for the changeId to see what changed
-      console.log('value', value);
+      // TODO: Add a handler for the changeId to see what changed
+      console.log(model.get('name') + ':', model.get('value'), model.get('important') ? '!important;' : ';');
       var changeId = model.get('hash') + '-' + (new Date()).getTime();
       var devices = {};
       _.each(model.get('devices'), function(hash, device) {
@@ -125,6 +126,7 @@ function(
             type: model.get('type'),
             name: model.get('name'),
             value: model.get('value'),
+            important: model.get('important'),
             action: 'change'
           };
         }

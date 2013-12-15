@@ -1,4 +1,4 @@
-/*! styl.io - v0.0.1 - 2013-11-02
+/*! styl.io - v0.0.1 - 2013-12-15
 * Copyright (c) 2013 ; Licensed  */
 var Change = {
   exec: function(data) {
@@ -114,8 +114,9 @@ Styles.nodes.properties = {
       style[Utils.toCamelCase(data.oldName)] = null;
     }
     if (style.setProperty) {
-      style.setProperty(data.name, data.value);
+      style.setProperty(data.name, data.value, data.important ? 'important' : null);
     } else {
+      // TODO: !important
       style[Utils.toCamelCase(data.name)] = data.value;
     }
     var next = style.getPropertyValue ? style.getPropertyValue(data.name) : style[Utils.toCamelCase(data.name)];
@@ -130,9 +131,16 @@ Styles.nodes.properties = {
     var parent = Styles.map[data.parentHash].ref;
     var style = parent.style || parent.cssStyle;
     var prev = style.getPropertyValue ? style.getPropertyValue(data.name) : style[Utils.toCamelCase(data.name)];
-    if (style.setProperty) {
-      style.setProperty(data.name, data.value);
+    // First remove the old property to override !important
+    if (style.removeProperty) {
+      style.removeProperty(data.name);
     } else {
+      style[Utils.toCamelCase(data.name)] = null;
+    }
+    if (style.setProperty) {
+      style.setProperty(data.name, data.value, data.important ? 'important' : null);
+    } else {
+      // TODO: !important
       style[Utils.toCamelCase(data.name)] = data.value;
     }
     var next = style.getPropertyValue ? style.getPropertyValue(data.name) : style[Utils.toCamelCase(data.name)];

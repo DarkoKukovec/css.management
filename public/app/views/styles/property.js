@@ -12,7 +12,8 @@ function(
 
     events: {
       'change .node-property-name': 'onNameChange',
-      'keyup .node-property-value': 'onValueChange'
+      'keyup .node-property-value': 'onValueChange',
+      'click .important-toggle': 'onPriorityToggle'
     },
 
     render: function() {
@@ -34,6 +35,12 @@ function(
 
     onValueChange: function() {
       this.model.set('value', this.$('.node-property-value').val());
+    },
+
+    onPriorityToggle: function() {
+      var important = !this.model.get('important');
+      this.model.set('important', important);
+      this.$('.important-toggle')[important ? 'addClass' : 'removeClass']('important-on');
     },
 
     cleanup: function() {

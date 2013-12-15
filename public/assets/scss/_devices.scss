@@ -3,7 +3,7 @@
     top: 60px;
     left: 0;
     bottom: 16px;
-    width: 199px;
+    width: $column-left - 1px;
 
     .devices-list {
       padding: 0;
