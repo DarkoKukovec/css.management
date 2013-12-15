@@ -6,7 +6,7 @@ function(app) {
   'use strict';
   var DeviceItem = Backbone.View.extend({
     tagName: 'li',
-    className: 'device-item',
+    className: 'device-item card',
     template: app.fetchTemplate('device'),
 
     events: {
@@ -26,12 +26,17 @@ function(app) {
     },
 
     render: function() {
+      var me = this;
       var data = this.model.toJSON();
       data.selection = data.selected ? 'checked="checked"' : '';
 
       this.$el[data.connected ? 'show' : 'hide']();
 
       this.$el.html(this.template(data));
+
+      setTimeout(function() {
+        me.$el.addClass('display');
+      }, 200);
 
       return this;
     },

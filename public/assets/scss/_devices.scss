@@ -4,7 +4,6 @@
     left: 0;
     bottom: 16px;
     width: 199px;
-    border-right: 1px solid #777;
 
     .devices-list {
       padding: 0;
@@ -13,9 +12,6 @@
 
       li {
         display: block;
-        margin: 4px;
-        padding: 4px;
-        background-color: #ddd;
         position: relative;
 
         &.disabled {
@@ -36,9 +32,14 @@
           display: block;
         }
 
-        .device-name {
-          font-weight: bold;
-          font-size: 18px;
+        .dialog-title {
+          font-size: 19px;
+          line-height: 19px;
+          font-weight: 500;
+          padding: 8px;
+        }
+        .dialog-message {
+          padding: 8px;
         }
         .device-info {
           padding: 4px 4px 4px 20px;

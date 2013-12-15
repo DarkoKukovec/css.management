@@ -6,6 +6,9 @@ $experimental-support-for-khtml: false;
 @import "compass";
 @import "normalize";
 
+@import "vars";
 @import "core";
+@import "dialog";
+@import "session";
 @import "devices";
 @import "nodes";

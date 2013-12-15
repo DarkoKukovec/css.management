@@ -60,6 +60,7 @@
 
       viewItem.render();
       this.$el.append(viewItem.el);
+      this.trigger('item:add');
       return viewItem;
     },
 

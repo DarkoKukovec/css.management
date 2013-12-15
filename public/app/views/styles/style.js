@@ -17,7 +17,7 @@ function(
     render: function() {
       var me = this;
       var data = this.model.toJSON();
-      data.name = data.name.replace(/"/g, '\\"');
+      data.name = data.name.replace(/"/g, '&#34;');
 
       var ListView = Backbone.ListView.extend({});
 

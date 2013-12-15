@@ -22,10 +22,6 @@ function(
     className: 'main-container',
     template: app.fetchTemplate('main'),
 
-    initialize: function() {
-      this.listenTo(app.collections.files, 'add', this.setActiveFile, this);
-    },
-
     activeFile: null,
     styles: {},
 
@@ -38,7 +34,10 @@ function(
 
       this.showDevices(ListView);
       this.showFileTabs(ListView);
-      this.showFileContent();
+
+      this.once('ready', function() {
+        me.showFileContent();
+      });
 
       var footer = new FooterView();
       this.$('.footer').append(footer.render().$el);
@@ -66,6 +65,7 @@ function(
         collection: app.collections.files,
         itemView: FileTabView
       });
+      fileTabs.on('item:add', this.setActiveFile, this);
       fileTabs.on('item:tab:click', this.showFileContent, this);
       this.$('.files').append(fileTabs.render().$el);
     },
@@ -96,6 +96,8 @@ function(
         }
         this.$('.styles-container > .style-item').hide();
         this.styles[model.get('hash')].$el.show();
+        this.$('.file-tab').removeClass('active');
+        this.$('.file-tab[data-file-hash=' + model.get('hash') + ']').addClass('active');
         this.activeFile = model;
       }
     },

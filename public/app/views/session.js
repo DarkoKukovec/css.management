@@ -19,6 +19,12 @@ function(
 
       this.$el.html(this.template(app.data));
 
+      this.once('ready', function() {
+        setTimeout(function() {
+          me.$('.dialog').addClass('display');
+        }, 500);
+      });
+
       return this;
     },
 

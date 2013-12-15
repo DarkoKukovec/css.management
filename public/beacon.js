@@ -3,10 +3,17 @@
 
 function getScript() {
   var parseUrl = function(url) {
+    var realUrl = url;
+    for (var i = 0; i < document.scripts.length; i++) {
+      if (document.scripts[i].src.indexOf(url) === 0) {
+        realUrl = document.scripts[i].src;
+        break;
+      }
+    }
     return {
       original: url,
       host: url.split('//')[1].split('/')[0],
-      session: url.split('#')[1].split(':')[0]
+      session: realUrl.split('#')[1].split(':')[0]
     };
   };
 
@@ -24,7 +31,10 @@ function getScript() {
   while (stack.indexOf(e) !== -1) {
     stack = stack.substring(stack.indexOf(e) + e.length);
   }
-  return parseUrl(stack);
+  stack = stack.split('/');
+  var last = stack.pop().split(':');
+  stack.push(last[0]);
+  return parseUrl(stack.join('/'));
 }
 
 window.addEventListener('load', function() {

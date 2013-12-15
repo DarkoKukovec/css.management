@@ -14,17 +14,14 @@ function(app) {
     },
 
     initialize: function() {
-      this.model.on('change:devices', this.onDeviceChange, this);
-      this.model.on('change:name', this.onNameChange, this);
-    },
-
-    cleanup: function() {
-      this.model.off(null, null, this);
+      this.listenTo(this.model, 'change:devices', this.onDeviceChange, this);
+      this.listenTo(this.model, 'change:name', this.onNameChange, this);
     },
 
     render: function() {
       var data = this.model.toJSON();
       this.$el.html(this.template(data));
+      this.$el.attr('data-file-hash', this.model.get('hash'));
 
       this.onDeviceChange();
 

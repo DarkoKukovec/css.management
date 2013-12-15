@@ -68,6 +68,7 @@ function(
       this.mainView = new MainView();
       this.mainView.on('device:edit', this.dialogs.editDevice, this);
       $('#main').html(this.mainView.render().$el);
+      this.mainView.trigger('ready');
     },
 
     // Ask the user for the session name
@@ -78,6 +79,7 @@ function(
         me.navigate('/session/' + session, true);
       });
       $('#main').html(view.render().$el);
+      view.trigger('ready');
     },
 
     // Update all the properties when the server responds

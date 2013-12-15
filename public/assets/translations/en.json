@@ -1,1 +1,6 @@
-{}
+{
+  "session_placeholder": "Name of the session",
+  "session_title": "Session",
+  "set_session": "Start the session",
+  "session_name_required": "Session name is required"
+}
