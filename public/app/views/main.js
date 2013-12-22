@@ -3,7 +3,7 @@ define([
 
   'views/device',
   'views/files',
-  // 'views/sidebar',
+  'views/sidebar',
   'views/footer',
   'views/styles/main'
 ],
@@ -13,7 +13,7 @@ function(
 
     DeviceView,
     FileTabView,
-    // SidebarView,
+    SidebarView,
     FooterView,
     StyleView
   ) {
@@ -24,6 +24,10 @@ function(
 
     activeFile: null,
     styles: {},
+
+    events: {
+      'click': 'clearSidebar'
+    },
 
     render: function() {
       var me = this;
@@ -38,6 +42,9 @@ function(
       this.once('ready', function() {
         me.showFileContent();
       });
+
+      var sidebar = new SidebarView();
+      this.$('.sidebar-container').append(sidebar.render().$el);
 
       var footer = new FooterView();
       this.$('.footer').append(footer.render().$el);
@@ -100,6 +107,10 @@ function(
         this.$('.file-tab[data-file-hash=' + model.get('hash') + ']').addClass('active');
         this.activeFile = model;
       }
+    },
+
+    clearSidebar: function() {
+      Backbone.trigger('sidebar:clear');
     },
 
     cleanup: function() {

@@ -2,5 +2,7 @@
   "session_placeholder": "Name of the session",
   "session_title": "Session",
   "set_session": "Start the session",
-  "session_name_required": "Session name is required"
+  "session_name_required": "Session name is required",
+  "devices": "Devices",
+  "select_node": "Select a node to see its details"
 }

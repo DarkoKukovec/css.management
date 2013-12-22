@@ -412,12 +412,6 @@ body {
         border-radius: 3px;
         padding: 8px 2px;
         margin: 0 6px 8px 0; }
-  body .sidebar-container {
-    position: absolute;
-    top: 60px;
-    right: 0;
-    bottom: 16px;
-    width: 219px; }
   body .footer {
     position: absolute;
     left: 0;
@@ -594,3 +588,31 @@ li:last-child > .list-node {
   .important-toggle.important-on {
     opacity: 1;
     color: #C41C16; }
+
+.sidebar-container {
+  position: absolute;
+  top: 66px;
+  right: 8px;
+  bottom: 22px;
+  width: 219px; }
+  .sidebar-container .sidebar {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    background: #fff;
+    border-radius: 3px;
+    padding: 8px 12px; }
+    .sidebar-container .sidebar .placeholder {
+      color: #777; }
+    .sidebar-container .sidebar .node-data {
+      display: none; }
+      .sidebar-container .sidebar .node-data .sidebar-node-name {
+        font-weight: 500;
+        font-size: 18px; }
+      .sidebar-container .sidebar .node-data .title {
+        font-weight: 500;
+        margin-top: 12px; }
+      .sidebar-container .sidebar .node-data ul {
+        margin: 2px 0; }
+    .sidebar-container .sidebar.active .node-data {
+      display: block; }
+    .sidebar-container .sidebar.active .placeholder {
+      display: none; }

@@ -21,7 +21,8 @@ function(
       'blur .node-property-value': 'onValueKey',
       'click .important-toggle': 'onPriorityToggle',
       'change .property-toggle': 'onToggle',
-      'click .reset-button': 'onReset'
+      'click .reset-button': 'onReset',
+      'click': 'setActive'
     },
 
     initialize: function() {
@@ -83,6 +84,12 @@ function(
       this.$('.node-property-name').val(this.model.get('name'));
       this.$('.node-property-value').val(this.model.get('value'));
       this.$('.important-toggle')[this.model.get('important') ? 'addClass' : 'removeClass']('important-on');
+    },
+
+    setActive: function(e) {
+      Backbone.trigger('sidebar:node:set', this.model);
+      e.preventDefault();
+      return false;
     },
 
     cleanup: function() {

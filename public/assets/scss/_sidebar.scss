@@ -1,0 +1,46 @@
+.sidebar-container {
+  position: absolute;
+  top: 66px;
+  right: 8px;
+  bottom: 22px;
+  width: $column-right - 1px;
+
+  .sidebar {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    background: #fff;
+    border-radius: 3px;
+    padding: 8px 12px;
+
+    .placeholder {
+      color: #777;
+    }
+
+    .node-data {
+      display: none;
+
+      .sidebar-node-name {
+        font-weight: 500;
+        font-size: 18px;
+      }
+
+      .title {
+        font-weight: 500;
+        margin-top: 12px;
+      }
+
+      ul {
+        margin: 2px 0;
+      }
+    }
+
+    &.active {
+      .node-data {
+        display: block;
+      }
+
+      .placeholder {
+        display: none;
+      }
+    }
+  }
+}
