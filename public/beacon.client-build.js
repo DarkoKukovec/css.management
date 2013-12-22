@@ -1,4 +1,4 @@
-/*! styl.io - v0.0.1 - 2013-12-15
+/*! styl.io - v0.0.1 - 2013-12-22
 * Copyright (c) 2013 ; Licensed  */
 var Change = {
   exec: function(data) {
@@ -169,6 +169,10 @@ Styles.sheets = {
       };
 
       var rules = node.cssRules || node.rules;
+      if (!rules) {
+        // Should not happen but it does - need to check it out
+        continue;
+      }
       for (var j = 0; j < rules.length; j++) {
         var style = Styles.types.get(rules[j], sheet);
         if (style) {

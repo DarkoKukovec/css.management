@@ -14,6 +14,10 @@ Styles.sheets = {
       };
 
       var rules = node.cssRules || node.rules;
+      if (!rules) {
+        // Should not happen but it does - need to check it out
+        continue;
+      }
       for (var j = 0; j < rules.length; j++) {
         var style = Styles.types.get(rules[j], sheet);
         if (style) {
