@@ -22,6 +22,10 @@ function(
       'click .important-toggle': 'onPriorityToggle'
     },
 
+    initialize: function() {
+      this.listenTo(this.model, 'change', this.updateData);
+    },
+
     render: function() {
       var me = this;
       var data = this.model.toJSON();
@@ -31,6 +35,8 @@ function(
       this.$('.auto-size').each(function() {
         app.autoSize($(this));
       });
+
+      this.updateData();
 
       return this;
     },
@@ -52,6 +58,15 @@ function(
 
     onValueKey: function(e) {
       var value = NumericFieldsUtils.update(e, this.$('.node-property-value'));
+    },
+
+    updateData: function() {
+      if (this.model.get('name').indexOf('color') === -1) {
+        this.$el.removeClass('color-node');
+      } else {
+        this.$el.addClass('color-node');
+        this.$('.node-color-indicator').css('background-color', this.model.get('value'));
+      }
     },
 
     cleanup: function() {
