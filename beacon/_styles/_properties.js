@@ -61,5 +61,22 @@ Styles.nodes.properties = {
       newValue: next,
       change: prev !== next
     });
+  },
+  remove: function(data) {
+    var parent = Styles.map[data.parentHash].ref;
+    var style = parent.style || parent.cssStyle;
+    if (style.removeProperty) {
+      style.removeProperty(data.name);
+    } else {
+      style[Utils.toCamelCase(data.name)] = null;
+    }
+
+    var next = style.getPropertyValue ? style.getPropertyValue(data.name) : style[Utils.toCamelCase(data.name)];
+    Connection.send('change:response', {
+      hash: data.hash,
+      data: data,
+      newValue: next,
+      change: !next
+    });
   }
 };

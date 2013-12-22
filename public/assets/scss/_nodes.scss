@@ -47,6 +47,14 @@ li:last-child > .list-node {
   }
 }
 
+.disabled-property {
+  opacity: 0.4;
+
+  * {
+    text-decoration: line-through;
+  }
+}
+
 .important-toggle {
   opacity: 0.2;
   cursor: pointer;

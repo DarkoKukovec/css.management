@@ -18,6 +18,10 @@ function(
     // (object) devices
     //   (string) device_id : (string) device_node_id
 
+    defaults: {
+      enabled: true
+    },
+
     compare: function(node) {
       if (node.type != this.get('type')) {
         return 0;
@@ -51,6 +55,7 @@ function(
       this.on('change:name', this.onNameChange, this);
       this.on('change:value', this.onValueChange, this);
       this.on('change:important', this.onValueChange, this);
+      this.on('change:enabled', this.onToggle, this);
     },
 
     updateStyle: function(style, device) {
@@ -88,6 +93,9 @@ function(
     // TODO: Reorder
 
     onNameChange: function(model, value) {
+      if (!model.get('enabled')) {
+        return;
+      }
       var devices = {};
       _.each(model.get('devices'), function(hash, device) {
         var d = app.collections.devices.get(device);
@@ -111,6 +119,9 @@ function(
     },
 
     onValueChange: function(model) {
+      if (!model.get('enabled')) {
+        return;
+      }
       // TODO: Try to change the value for the properties before this with the same name
       // TODO: Add a handler for the changeId to see what changed
       console.log(model.get('name') + ':', model.get('value'), model.get('important') ? '!important;' : ';');
@@ -128,6 +139,44 @@ function(
             value: model.get('value'),
             important: model.get('important'),
             action: 'change'
+          };
+        }
+      });
+      // Get list of selected devices
+      app.socket.emit('change:request', {
+        session: app.data.session,
+        payload: devices
+      });
+    },
+
+    onToggle: function() {
+      if (this.get('enabled')) {
+        this.addStyle();
+      } else {
+        this.removeStyle();
+      }
+    },
+
+    addStyle: function() {
+      this.onValueChange(this);
+    },
+
+    removeStyle: function() {
+      var model = this;
+      var changeId = model.get('hash') + '-' + (new Date()).getTime();
+      var devices = {};
+      _.each(model.get('devices'), function(hash, device) {
+        var d = app.collections.devices.get(device);
+        if (d.get('selected')) {
+          devices[device] = {
+            changeId: changeId,
+            hash: hash,
+            parentHash: model.parentNode.get('devices')[device],
+            type: model.get('type'),
+            name: model.get('name'),
+            value: model.get('value'),
+            important: model.get('important'),
+            action: 'remove'
           };
         }
       });

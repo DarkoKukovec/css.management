@@ -19,7 +19,9 @@ function(
       'keydown .node-property-value': 'onValueKey',
       'keypress .node-property-value': 'onValueKey',
       'blur .node-property-value': 'onValueKey',
-      'click .important-toggle': 'onPriorityToggle'
+      'click .important-toggle': 'onPriorityToggle',
+      'change .property-toggle': 'onToggle',
+      'click .reset-button': 'onReset'
     },
 
     initialize: function() {
@@ -39,6 +41,12 @@ function(
       this.updateData();
 
       return this;
+    },
+
+    onToggle: function() {
+      var enabled = this.$('.property-toggle').prop('checked');
+      this.model.set('enabled', enabled);
+      this.$el[enabled ? 'removeClass' : 'addClass']('disabled-property');
     },
 
     onNameChange: function() {

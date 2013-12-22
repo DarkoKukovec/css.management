@@ -573,6 +573,11 @@ li:last-child > .list-node {
   margin: 3px 0 -2px -4px;
   border: 1px solid #ACACAC; }
 
+.disabled-property {
+  opacity: 0.4; }
+  .disabled-property * {
+    text-decoration: line-through; }
+
 .important-toggle {
   opacity: 0.2;
   cursor: pointer; }
