@@ -6,6 +6,7 @@ define([
 
   'collections/StyleNodes',
   'collections/devices',
+  'collections/docs',
 
   'views/main',
   'views/session'
@@ -19,6 +20,7 @@ function(
 
     StyleNodesCollection,
     DevicesCollection,
+    DocsCollection,
 
     MainView,
     SessionView
@@ -43,6 +45,7 @@ function(
       // Initialize stores
       app.collections.files = app.collections.files || new StyleNodesCollection();
       app.collections.devices = app.collections.devices || new DevicesCollection();
+      app.collections.docs = app.collections.docs || new DocsCollection();
     },
 
     connect: function() {

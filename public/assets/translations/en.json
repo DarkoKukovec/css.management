@@ -4,5 +4,7 @@
   "set_session": "Start the session",
   "session_name_required": "Session name is required",
   "devices": "Devices",
-  "select_node": "Select a node to see its details"
+  "select_node": "Select a node to see its details",
+  "docs": "Documentation",
+  "more_info": "More info"
 }

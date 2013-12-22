@@ -616,3 +616,6 @@ li:last-child > .list-node {
       display: block; }
     .sidebar-container .sidebar.active .placeholder {
       display: none; }
+    .sidebar-container .sidebar .docs .summary {
+      margin-bottom: 8px;
+      font-size: 12px; }

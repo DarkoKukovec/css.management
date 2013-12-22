@@ -88,7 +88,6 @@ function(
 
     setActive: function(e) {
       Backbone.trigger('sidebar:node:set', this.model);
-      e.preventDefault();
       return false;
     },
 

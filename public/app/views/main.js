@@ -109,8 +109,10 @@ function(
       }
     },
 
-    clearSidebar: function() {
-      Backbone.trigger('sidebar:clear');
+    clearSidebar: function(e) {
+      if (this.$('.sidebar').find(e.target).length === 0) {
+        Backbone.trigger('sidebar:clear');
+      }
     },
 
     cleanup: function() {
