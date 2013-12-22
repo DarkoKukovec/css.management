@@ -23,6 +23,10 @@ li:last-child > .list-node {
   margin: 0;
 }
 
+.property-toggle {
+  margin: 0 -2px 0 2px;
+}
+
 .node-style-name, .node-media-name, .node-property-name, .node-property-value {
   border: none;
   background: transparent;
@@ -52,6 +56,16 @@ li:last-child > .list-node {
 
   * {
     text-decoration: line-through;
+  }
+}
+
+.changed-node {
+  .reset-button {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-image: url(../images/reset.png);
+    margin: 0 -6px -5px -19px;
   }
 }
 

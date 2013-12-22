@@ -46,6 +46,12 @@ function(
       data.devices[device.get('id')] = style.hash;
       this.set(data);
 
+      this.set({
+        originalName: data.name,
+        originalValue: data.value,
+        originalImportant: data.important
+      });
+
       if (style.children) {
         // Create the children
         var children = new StyleNodes();
@@ -96,11 +102,13 @@ function(
       if (!model.get('enabled')) {
         return;
       }
+      var changeId = model.get('hash') + '-' + (new Date()).getTime();
       var devices = {};
       _.each(model.get('devices'), function(hash, device) {
         var d = app.collections.devices.get(device);
         if (d.get('selected')) {
           devices[device] = {
+            changeId: changeId,
             hash: hash,
             parentHash: model.parentNode.get('devices')[device],
             type: model.get('type'),
@@ -184,6 +192,20 @@ function(
       app.socket.emit('change:request', {
         session: app.data.session,
         payload: devices
+      });
+    },
+
+    isOriginal: function() {
+      return this.get('name') == this.get('originalName') &&
+        this.get('value') == this.get('originalValue') &&
+        this.get('important') == this.get('originalImportant');
+    },
+
+    resetData: function() {
+      this.set({
+        name: this.get('originalName'),
+        value: this.get('originalValue'),
+        important: this.get('originalImportant')
       });
     }
   });

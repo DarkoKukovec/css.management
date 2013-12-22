@@ -75,6 +75,14 @@ function(
         this.$el.addClass('color-node');
         this.$('.node-color-indicator').css('background-color', this.model.get('value'));
       }
+      this.$el[this.model.isOriginal() ? 'removeClass' : 'addClass']('changed-node');
+    },
+
+    onReset: function() {
+      this.model.resetData();
+      this.$('.node-property-name').val(this.model.get('name'));
+      this.$('.node-property-value').val(this.model.get('value'));
+      this.$('.important-toggle')[this.model.get('important') ? 'addClass' : 'removeClass']('important-on');
     },
 
     cleanup: function() {
