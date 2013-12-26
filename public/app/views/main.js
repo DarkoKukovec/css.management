@@ -110,7 +110,9 @@ function(
     },
 
     clearSidebar: function(e) {
-      if (this.$('.sidebar').find(e.target).length === 0) {
+      var isSidebar = this.$('.sidebar').find(e.target).length !== 0;
+      var isStyle = this.$('.style-item > li').find(e.target).length !== 0;
+      if (!isStyle && !isSidebar) {
         Backbone.trigger('sidebar:clear');
       }
     },

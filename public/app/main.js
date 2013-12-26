@@ -39,6 +39,15 @@ function(
       el.select();
     }, 1);
   });
+  $(document).on('focus', 'input, textarea', function(e) {
+    app.focusQueue.unshift({el: e.target, time: new Date()});
+    app.focusQueue.length = 5;
+  });
+  $(document).on('blur', 'input, textarea', function() {
+    app.focusQueue.unshift({el: null, time: new Date()});
+    app.focusQueue.length = 5;
+  });
+
 
   I18n.init({
     locales: ['en', 'hr'],

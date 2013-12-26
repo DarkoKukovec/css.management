@@ -40,6 +40,14 @@ li:last-child > .list-node {
   max-width: 95%;
 }
 
+.property-toggle:checked {
+  visibility: hidden;
+}
+
+.node-property:hover .property-toggle {
+  visibility: visible;
+}
+
 .color-node {
   .node-color-indicator {
     display: inline-block;

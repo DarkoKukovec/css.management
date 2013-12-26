@@ -37,7 +37,8 @@ function(
       '-1': 'property',
       1: 'style',
       4: 'media'
-    }
+    },
+    focusQueue: []
   };
 
   var sizer = $('.sizer');
@@ -90,6 +91,10 @@ function(
         return;
       }
       $el.width($el.val().length * 7);
+    },
+    focusBack: function(el) {
+      var index = $('input, textarea').index(el) - 1;
+      $('input, textarea').eq(index).focus();
     }
   });
 
