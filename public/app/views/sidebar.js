@@ -30,7 +30,33 @@ function(
     },
 
     render: function() {
+      var me = this;
       this.$el.html(this.template(app.data));
+
+      this.$('.sidebar-colorpicker').spectrum({
+        flat: true,
+        showInput: true,
+        showAlpha: true,
+        showButtons: false,
+        preferredFormat: app.settings.colorFormat,
+        move: function(color) {
+          if (color.alpha < 1) {
+            color = color.toRgbString();
+          } else {
+            var format = app.settings.colorFormat;
+            if (format == 'rgb') {
+              color = color.toRgbString();
+            } else if (format == 'hsl') {
+              color = color.toHslString();
+            } else {
+              color = color.toHexString();
+            }
+          }
+          me.activeModel.set('value', color);
+          me.activeModel.trigger('property:value:change');
+        }
+      });
+
       return this;
     },
 
@@ -38,10 +64,20 @@ function(
       this.$el.addClass('active');
       if (this.activeModel) {
         this.activeModel.off('change:name', this.onModelChange, this);
+        this.activeModel.off('change:value', this.onValueChange, this);
       }
       this.activeModel = model;
       this.activeModel.on('change:name', this.onModelChange, this);
+      this.activeModel.on('change:value', this.onValueChange, this);
       this.onModelChange();
+      this.onValueChange();
+    },
+
+    onValueChange: function() {
+      if (this.activeModel && this.activeModel.isColor()) {
+        this.$('.sidebar-colorpicker').spectrum('reflow');
+        this.$('.sidebar-colorpicker').spectrum('set', this.activeModel.get('value'));
+      }
     },
 
     onModelChange: function() {
@@ -54,10 +90,18 @@ function(
           .text(app.collections.devices.get(deviceId).get('name'));
         deviceList.append(device);
       });
-      // TODO: Colorpicker
+
+      if (this.activeModel && this.activeModel.isColor()) {
+        this.$('.sp-container').show();
+      } else {
+        this.$('.sp-container').hide();
+      }
     },
 
     showDocs: function(docModel) {
+      if (!this.activeModel) {
+        return;
+      }
       var name = this.activeModel.get('name');
       if (docModel) {
         if (docModel.get('name') !== name) {

@@ -19,7 +19,9 @@ requirejs.config({
 
     io: '../socket.io/socket.io.js',
 
-    listview: '../assets/javascript/plugins/backbone.listview'
+    listview: '../assets/javascript/plugins/backbone.listview',
+
+    spectrum: '../assets/javascript/plugins/spectrum'
   },
 
   shim: {
@@ -30,6 +32,10 @@ requirejs.config({
 
     jquery: {
       exports: '$'
+    },
+
+    spectrum: {
+      deps: ['jquery']
     },
 
     listview: {

@@ -49,5 +49,15 @@
         font-size: 12px;
       }
     }
+
+    .sp-container {
+      border: none;
+      background-color: transparent;
+
+      .sp-input {
+        background-color: #fff;
+        border-radius: 2px;
+      }
+    }
   }
 }

@@ -27,6 +27,7 @@ function(
 
     initialize: function() {
       this.listenTo(this.model, 'change', this.updateData);
+      this.listenTo(this.model, 'property:value:change', this.updateValue);
     },
 
     render: function() {
@@ -42,6 +43,11 @@ function(
       this.updateData();
 
       return this;
+    },
+
+    updateValue: function() {
+      this.$('.node-property-value').val(this.model.get('value'));
+      app.autoSize(this.$('.node-property-value'));
     },
 
     onToggle: function() {
@@ -70,7 +76,7 @@ function(
     },
 
     updateData: function() {
-      if (this.model.get('name').indexOf('color') === -1) {
+      if (!this.model.isColor()) {
         this.$el.removeClass('color-node');
       } else {
         this.$el.addClass('color-node');

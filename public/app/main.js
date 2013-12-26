@@ -33,8 +33,11 @@ function(
 
   $(document).on('keyup', '.auto-size', app.autoSize);
   $(document).on('keydown', '.auto-size', app.autoSize);
-  $(document).on('focus', '.auto-size', function() {
-    this.select();
+  $(document).on('focus', '.auto-size', function(e) {
+    var el = this;
+    setTimeout(function() {
+      el.select();
+    }, 1);
   });
 
   I18n.init({

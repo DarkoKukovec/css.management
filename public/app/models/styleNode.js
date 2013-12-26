@@ -201,6 +201,10 @@ function(
         this.get('important') == this.get('originalImportant');
     },
 
+    isColor: function() {
+      return this.get('name').indexOf('color') !== -1;
+    },
+
     resetData: function() {
       this.set({
         name: this.get('originalName'),

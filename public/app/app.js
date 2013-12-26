@@ -6,6 +6,7 @@ define([
   'backbone',
   'I18n',
   'io',
+  'spectrum',
   //plugins
   'listview'
 ],
@@ -27,7 +28,8 @@ function(
     settings: {
       defaults: {
         'language': 'en'
-      }
+      },
+      colorFormat: 'hex'
     },
     types: {
       '-3': 'inline-style',
