@@ -17,6 +17,8 @@ var Connection = {
   },
 
   send: function(tag, message) {
+    message.session = Utils.getSession();
+    message.device = Utils.getID();
     Connection.socket.emit(tag, message);
   },
 

@@ -38,7 +38,7 @@ function(
     hasValue: function(needle) {
       var found = false;
       this.each(function(item) {
-        found |= item.compareValue(needle);
+        found |= item.valueCompare(needle);
       });
       return found;
     },

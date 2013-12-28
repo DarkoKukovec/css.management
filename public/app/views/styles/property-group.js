@@ -17,8 +17,6 @@ function(
       var me = this;
       var data = this.model.toJSON();
 
-      console.log(this.model.get('children'))
-
       var ListView = Backbone.ListView.extend({});
 
       var styles = new ListView({

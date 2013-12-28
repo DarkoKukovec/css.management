@@ -121,10 +121,21 @@ function(
       }
     },
 
+    changes: {},
+    changeRequest: function(payload, callback, scope) {
+      this.changes[payload.changeId] = {
+        id: payload.changeId,
+        callback: callback,
+        scope: scope
+      };
+      app.socket.emit('change:request', payload);
+    },
     onChangeResponse: function(data) {
       console.log('Change response', data);
-      // Can be ignorred, but if the response is not equal to the request,
-      // it should add a new property before the current one
+      if (this.changes[data.changeId]) {
+        var change = this.changes[data.changeId];
+        change.callback.call(change.scope, data);
+      }
     },
 
     onDisconnect: function() {

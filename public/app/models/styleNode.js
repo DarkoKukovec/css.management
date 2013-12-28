@@ -23,25 +23,26 @@ function(
     },
 
     compare: function(node) {
-      if (node.type != this.get('type')) {
-        return 0;
-      }
       // TODO: Find a way to differentiate inline stylesheets (type == -3)
-      if (node.name != this.get('name')) {
+      if (node.name !== this.get('name')) {
         return 0;
       }
-      if (node.type == -1 && !this.valueCompare(node.value)) {
-        // Both are properties with the same name, but not with the same value
-        // Order has to be checked (in collection)
-        return 1;
+      console.log(this.attributes, node)
+      if (node.type != this.get('type')) {
+        if (node.type === -1 && this.get('type') === -4 && node.name === this.get('name')) {
+          return 1;
+        }
+        return 0;
       }
-      if (node.type == -4 && !node.value.hasValue(this.get('value'))) {
-        // Both are properties with the same name, but not with the same value
-        // Order has to be checked (in collection)
+      if (node.type === -1) {
         return 1;
       }
 
       return 2;
+    },
+
+    isGroupItem: function() {
+      return this.parentNode.get('type') === -4;
     },
 
     valueCompare: function(value) {
@@ -98,6 +99,7 @@ function(
     },
 
     addSimilar: function(style, device, StyleNodes) {
+      var children;
       if (this.get('type') === -1) {
         var data = this.toJSON();
         var nodeDevices = this.get('devices');
@@ -107,25 +109,32 @@ function(
         });
         this.set('type', -4);
         this.set('children', new StyleNodes());
-        this.get('children').add(data);
-        this.get('children').first().parentNode = this.parentNode;
-        this.get('children').first().listenerInit();
+        children = this.get('children');
+        children.add(data);
+        children.first().parentNode = this;
+        children.first().listenerInit();
         console.log(this.get('name'), this.get('value'), 'current');
+      } else {
+        children = this.get('children');
       }
       var me = this;
-      app.router.propertyCheck(device, style, this.get('children').pluck('value'), function(results) {
-        // TODO: Take the results into account
-        var devices = me.get('devices');
-        devices[device.get('id')] = style.hash;
-        // The change event isn't triggered?
-        var pos = results.indexOf(true);
-        if (pos === -1) {
-          pos = results.length;
-        }
-        me.set('devices', devices).trigger('change:devices');
-        me.get('children').addAt(pos, style, device, me.parentNode);
-          console.log(me.get('name'), style.value, 'new', results, pos);
-      }, this);
+      if (children.hasValue(style.value)) {
+        this.updateStyle(style, device);
+      } else {
+        app.router.propertyCheck(device, style, children.pluck('value'), function(results) {
+          var devices = me.get('devices');
+          devices[device.get('id')] = style.hash;
+          // The change event isn't triggered?
+          // TODO: Take the strings results into account
+          var pos = results.indexOf(false);
+          if (pos === -1) {
+            pos = results.length;
+          }
+          me.set('devices', devices).trigger('change:devices');
+          me.get('children').addAt(pos, style, device, me);
+            console.log(me.get('name'), style.value, 'new', results, pos);
+        }, this);
+      }
     },
 
     removeDevice: function(device) {
@@ -151,7 +160,15 @@ function(
       if (!model.get('enabled')) {
         return;
       }
-      // TODO: Add/remove from property group
+
+      // TODO: Update property groups
+      this.trigger('groups:update', model);
+
+      var parent = model.parentNode;
+      if (parent.get('type') === -4) {
+        parent = parent.parentNode;
+      }
+
       var changeId = model.get('hash') + '-' + (new Date()).getTime();
       var devices = {};
       _.each(model.get('devices'), function(hash, device) {
@@ -160,7 +177,7 @@ function(
           devices[device] = {
             changeId: changeId,
             hash: hash,
-            parentHash: model.parentNode.get('devices')[device],
+            parentHash: parent.get('devices')[device],
             type: model.get('type'),
             oldName: model.previous('name'),
             name: model.get('name'),
@@ -180,11 +197,20 @@ function(
       if (!model.get('enabled') || model.get('type') === -4) {
         return;
       }
-      // TODO: Try to change the value for the properties before this with the same name
-      // TODO: Add a handler for the changeId to see what changed
-      // TODO: Also update all the group properties above (smaller priority)
+
+      // TODO: Try to change the value for the properties before this in the group
+      if (this.isGroupItem()) {
+        this.trigger('group:change:prev', model);
+      }
+
+      var parent = model.parentNode;
+      if (parent.get('type') === -4) {
+        parent = parent.parentNode;
+      }
+
       console.log(model.get('name') + ':', model.get('value'), model.get('important') ? '!important;' : ';');
       var changeId = model.get('hash') + '-' + (new Date()).getTime();
+      // Get list of selected devices
       var devices = {};
       _.each(model.get('devices'), function(hash, device) {
         var d = app.collections.devices.get(device);
@@ -192,7 +218,7 @@ function(
           devices[device] = {
             changeId: changeId,
             hash: hash,
-            parentHash: model.parentNode.get('devices')[device],
+            parentHash: parent.get('devices')[device],
             type: model.get('type'),
             name: model.get('name'),
             value: model.get('value'),
@@ -201,11 +227,15 @@ function(
           };
         }
       });
-      // Get list of selected devices
-      app.socket.emit('change:request', {
+
+      // TODO: Add a handler for the changeId to see what changed
+      app.router.changeRequest({
+        changeId: changeId,
         session: app.data.session,
         payload: devices
-      });
+      }, function(data) {
+        console.log('change:response', model, data);
+      }, this);
     },
 
     onToggle: function() {
@@ -262,6 +292,10 @@ function(
         value: this.get('originalValue'),
         important: this.get('originalImportant')
       });
+    },
+
+    getDevices: function() {
+      return _.keys(this.get('devices'));
     }
   });
 

@@ -11,6 +11,9 @@ function(
 
     render: function() {
       var type = app.types[this.model.get('type')];
+      if (type === 'property-group') {
+        type = 'property';
+      }
       var me = this;
       require([
         'views/styles/' + type

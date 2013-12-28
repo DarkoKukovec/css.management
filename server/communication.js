@@ -42,8 +42,12 @@ socket.on('connection', function(client) {
 
   // Change response from client to manager
   client.on('change:response', function(data) {
+    if (data.change) {
+      var c = clients[data.session][data.device];
+      updateNode(c.data.style, data.hash, data.data.name, data.newValue);
+    }
     if (managers[data.session]) {
-      managers[data.session].comm.emmit('change:response', data);
+      managers[data.session].comm.emit('change:response', data);
     }
   });
 

@@ -1,10 +1,13 @@
 define([
   'app',
+  'views/styles/property-group',
   'utils/numeric-fields'
 ],
 
 function(
     app,
+
+    PropertyGroupView,
 
     NumericFieldsUtils
   ) {
@@ -14,35 +17,44 @@ function(
     template: app.fetchTemplate('styles/property'),
 
     events: {
-      'change .node-property-name': 'onNameChange',
-      'keyup .node-property-value': 'onValueChange',
-      'keydown .node-property-value': 'onValueKey',
-      'keypress .node-property-value': 'onValueKey',
-      'blur .node-property-value': 'onValueKey',
-      'click .important-toggle': 'onPriorityToggle',
-      'change .property-toggle': 'onToggle',
-      'click .reset-button': 'onReset',
+      'change > span > .node-property-name': 'onNameChange',
+      'keyup > span > .node-property-value': 'onValueChange',
+      'keydown > span > .node-property-value': 'onValueKey',
+      'keypress > span > .node-property-value': 'onValueKey',
+      'blur > span > .node-property-value': 'onValueKey',
+      'click > .important-toggle': 'onPriorityToggle',
+      'change > .property-toggle': 'onToggle',
+      'click > .reset-button': 'onReset',
       'click': 'setActive',
-      'focus input[type=text]': 'setActive',
-      'focus input[type=checkbox]': 'onCheckboxFocus'
+      'focus > span > input[type=text]': 'setActive',
+      'focus > input[type=checkbox]': 'onCheckboxFocus'
     },
 
     initialize: function() {
       this.listenTo(this.model, 'change', this.updateData);
+      this.listenTo(this.model, 'change:type', this.render);
       this.listenTo(this.model, 'property:value:change', this.updateValue);
+      this.listenTo(this.model, 'change:devices', this.onDeviceCountUpdate, this);
     },
 
     render: function() {
-      var me = this;
-      var data = this.model.toJSON();
+      if (this.model.get('type') === -4) {
+        var view = new PropertyGroupView({
+          model: this.model
+        });
+        this.$el.html(view.render().$el);
+      } else {
+        var me = this;
+        var data = this.model.toJSON();
 
-      this.$el.html(this.template(data));
+        this.$el.html(this.template(data));
 
-      this.$('.auto-size').each(function() {
-        app.autoSize($(this));
-      });
+        this.$('.auto-size').each(function() {
+          app.autoSize($(this));
+        });
 
-      this.updateData();
+        this.updateData();
+      }
 
       return this;
     },
@@ -77,6 +89,11 @@ function(
       var value = NumericFieldsUtils.update(e, this.$('.node-property-value'));
     },
 
+    onDeviceCountUpdate: function() {
+      var deviceCount = this.model.getDevices().length;
+      this.$el[deviceCount ? 'show' : 'hide']();
+    },
+
     updateData: function() {
       if (!this.model.isColor()) {
         this.$el.removeClass('color-node');
@@ -90,15 +107,21 @@ function(
     onReset: function() {
       this.model.resetData();
       this.$('.node-property-name').val(this.model.get('name'));
-      this.$('.node-property-value').val(this.model.get('value'));
       this.$('.important-toggle')[this.model.get('important') ? 'addClass' : 'removeClass']('important-on');
       if (!this.$('.property-toggle').prop('checked')) {
         this.$('.property-toggle').click();
       }
+      this.updateValue();
     },
 
     setActive: function(e) {
       Backbone.trigger('sidebar:node:set', this.model);
+      if (e.target.select) {
+        setTimeout(function() {
+          e.target.select();
+        }, 1);
+      }
+      return false;
     },
 
     onCheckboxFocus: function(e) {

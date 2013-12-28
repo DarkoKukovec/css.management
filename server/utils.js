@@ -54,3 +54,18 @@ normalizeNodes = function(style) {
     }
   }
 };
+
+updateNode = function(style, nodeHash, nodeName, nodeValue) {
+  for (var i = 0; i < style.length; i++) {
+
+    if (style[i].hash == nodeHash) {
+      style[i].name = nodeName;
+      style[i].value = nodeValue;
+      return true;
+    }
+
+    if ('children' in style[i]) {
+      updateNode(style[i].children, nodeHash, nodeName, nodeValue);
+    }
+  }
+};
