@@ -13,22 +13,17 @@ function(
       var lastAddedIndex = -1;
       for (var i = 0; i < styles.length; i++) {
         var found = 0;
-        var similar = [];
         for (var j = 0; j < this.size(); j++) {
           var node = this.at(j);
           var diff = node.compare(styles[i]);
-          if (diff == 2) {
+          if (diff === 1) {
+            found = 1;
+            node.addSimilar(styles[i], device, StyleNodes);
+          } else if (diff === 2) {
             // Add the device to the node and update the node
             node.updateStyle(styles[i], device);
             lastAddedIndex = j;
             found = 2;
-            break;
-          } else if (diff == 1) {
-            found = 1;
-            similar.push(node);
-          } else if (diff === 0 && found == 1) {
-            // TODO: Determine the order based on similar[]
-            lastAddedIndex = j - 1;
             break;
           }
         }
@@ -38,6 +33,14 @@ function(
           this.addAt(lastAddedIndex, styles[i], device, parent);
         }
       }
+    },
+
+    hasValue: function(needle) {
+      var found = false;
+      this.each(function(item) {
+        found |= item.compareValue(needle);
+      });
+      return found;
     },
 
     removeStyles: function(device, styles) {

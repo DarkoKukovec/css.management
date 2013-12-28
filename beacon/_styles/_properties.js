@@ -15,6 +15,7 @@ Styles.nodes.properties = {
 
     return properties;
   },
+
   rename: function(data) {
     var parent = Styles.map[data.parentHash].ref;
     var style = parent.style || parent.cssStyle;

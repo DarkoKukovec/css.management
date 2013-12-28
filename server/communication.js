@@ -43,8 +43,16 @@ socket.on('connection', function(client) {
   // Change response from client to manager
   client.on('change:response', function(data) {
     if (managers[data.session]) {
-      managers[data.session].emmit('change:response', data);
+      managers[data.session].comm.emmit('change:response', data);
     }
+  });
+
+  client.on('property:check', function(data) {
+    clients[data.session][data.device].comm.emit('property:check', data);
+  });
+
+  client.on('property:check:response', function(data) {
+    managers[data.session].comm.emit('property:check', data);
   });
 
   // client.on('modernizr:init', function(data) {

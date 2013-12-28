@@ -96,15 +96,35 @@ function(
       this.mainView.$('.version').text(app.data.version);
     },
 
+    checks: {},
+    propertyCheck: function(device, property, values, callback, scope) {
+      var id = device.get('id') + '-' + property.hash + '-' + (new Date()).getTime();
+      this.checks[id] = {
+        id: id,
+        callback: callback,
+        scope: scope
+      };
+      app.socket.emit('property:check', {
+        device: device.get('id'),
+        session: app.data.session,
+        property: property.hash,
+        parent: property.parentHash,
+        values: values,
+        checkId: id
+      });
+    },
+    onPropertyCheck: function(data) {
+      console.log('Property check', data);
+      if (this.checks[data.checkId]) {
+        var check = this.checks[data.checkId];
+        check.callback.call(check.scope, data.results);
+      }
+    },
+
     onChangeResponse: function(data) {
       console.log('Change response', data);
       // Can be ignorred, but if the response is not equal to the request,
       // it should add a new property before the current one
-    },
-
-    onPropertyCheck: function(data) {
-      console.log('Property check', data);
-      // TODO: When all clients respond, figure out the right property order
     },
 
     onDisconnect: function() {

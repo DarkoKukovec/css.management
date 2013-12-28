@@ -7,7 +7,7 @@ function(
   ) {
   'use strict';
   var StyleNode = Backbone.Model.extend({
-    idAttribute: 'hash',
+    // idAttribute: 'hash',
     // (string identity) hash
     // (string) parentHash
     // (int) type
@@ -30,13 +30,27 @@ function(
       if (node.name != this.get('name')) {
         return 0;
       }
-      if (node.type == -1 && node.value != this.get('value')) {
+      if (node.type == -1 && !this.valueCompare(node.value)) {
+        // Both are properties with the same name, but not with the same value
+        // Order has to be checked (in collection)
+        return 1;
+      }
+      if (node.type == -4 && !node.value.hasValue(this.get('value'))) {
         // Both are properties with the same name, but not with the same value
         // Order has to be checked (in collection)
         return 1;
       }
 
       return 2;
+    },
+
+    valueCompare: function(value) {
+      // handle cases like "Arial, serif" (Chrome) & "Arial,serif" (Firefox)
+      var thisValue = this.get('value');
+      value = value.replace(/\s\s/g, ' ').replace(/,\s/g, ',');
+      thisValue = thisValue.replace(/\s\s/g, ' ').replace(/,\s/g, ',');
+      console.log(value, thisValue);
+      return value === thisValue;
     },
 
     init: function(style, device, StyleNodes) {
@@ -58,6 +72,10 @@ function(
         children.updateStyles(device, style.children, this);
         this.set('children', children);
       }
+      this.listenerInit();
+    },
+
+    listenerInit: function() {
       this.on('change:name', this.onNameChange, this);
       this.on('change:value', this.onValueChange, this);
       this.on('change:important', this.onValueChange, this);
@@ -79,6 +97,37 @@ function(
       }
     },
 
+    addSimilar: function(style, device, StyleNodes) {
+      if (this.get('type') === -1) {
+        var data = this.toJSON();
+        var nodeDevices = this.get('devices');
+        data.devices = {};
+        _.each(nodeDevices, function(hash, id) {
+          data.devices[id] = hash;
+        });
+        this.set('type', -4);
+        this.set('children', new StyleNodes());
+        this.get('children').add(data);
+        this.get('children').first().parentNode = this.parentNode;
+        this.get('children').first().listenerInit();
+        console.log(this.get('name'), this.get('value'), 'current');
+      }
+      var me = this;
+      app.router.propertyCheck(device, style, this.get('children').pluck('value'), function(results) {
+        // TODO: Take the results into account
+        var devices = me.get('devices');
+        devices[device.get('id')] = style.hash;
+        // The change event isn't triggered?
+        var pos = results.indexOf(true);
+        if (pos === -1) {
+          pos = results.length;
+        }
+        me.set('devices', devices).trigger('change:devices');
+        me.get('children').addAt(pos, style, device, me.parentNode);
+          console.log(me.get('name'), style.value, 'new', results, pos);
+      }, this);
+    },
+
     removeDevice: function(device) {
       // Remove the device from the node
       var devices = this.get('devices');
@@ -94,14 +143,15 @@ function(
 
     // TODO: Add
     // TODO: Remove
-    // TODO: Toggle
-    // TODO: Reset
     // TODO: Reorder
+    // TODO: PropertyGroup - UI transition from/to property
+    // TODO: PropertyGroup - check correct property order
 
     onNameChange: function(model, value) {
       if (!model.get('enabled')) {
         return;
       }
+      // TODO: Add/remove from property group
       var changeId = model.get('hash') + '-' + (new Date()).getTime();
       var devices = {};
       _.each(model.get('devices'), function(hash, device) {
@@ -127,11 +177,12 @@ function(
     },
 
     onValueChange: function(model) {
-      if (!model.get('enabled')) {
+      if (!model.get('enabled') || model.get('type') === -4) {
         return;
       }
       // TODO: Try to change the value for the properties before this with the same name
       // TODO: Add a handler for the changeId to see what changed
+      // TODO: Also update all the group properties above (smaller priority)
       console.log(model.get('name') + ':', model.get('value'), model.get('important') ? '!important;' : ';');
       var changeId = model.get('hash') + '-' + (new Date()).getTime();
       var devices = {};

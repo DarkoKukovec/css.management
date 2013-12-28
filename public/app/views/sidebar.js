@@ -38,12 +38,12 @@ function(
         showInput: true,
         showAlpha: true,
         showButtons: false,
-        preferredFormat: app.settings.colorFormat,
+        preferredFormat: app.getSettings('colorFormat'),
         move: function(color) {
           if (color.alpha < 1) {
             color = color.toRgbString();
           } else {
-            var format = app.settings.colorFormat;
+            var format = app.getSettings('colorFormat');
             if (format == 'rgb') {
               color = color.toRgbString();
             } else if (format == 'hsl') {

@@ -1,4 +1,4 @@
-/*! styl.io - v0.0.1 - 2013-12-22
+/*! styl.io - v0.0.1 - 2013-12-28
 * Copyright (c) 2013 ; Licensed  */
 var Change = {
   exec: function(data) {
@@ -26,7 +26,41 @@ var Connection = {
   }
 };
 var Probe = {
-  check: function() {}
+  check: function(data) {
+    var parent = Styles.map[data.parent].ref;
+    var style = parent.style || parent.cssStyle;
+    var original = Probe.getValue(style, data.name);
+    var prev = original;
+    var response = [];
+    for (var i = 0; i < data.values.length; i++) {
+      var next = Probe.setValue(style, data.name, data.values[i]);
+      if (next === data.values[i]) {
+        response.push(true);
+      } else if (next === prev) {
+        response.push(false);
+      } else {
+        response.push(next);
+      }
+      prev = next;
+    }
+    Probe.setValue(style, data.name, original);
+    Connection.send('property:check:response', {
+      results: response,
+      session: data.session,
+      checkId: data.checkId,
+    });
+  },
+  getValue: function(style, name) {
+    return style.getPropertyValue ? style.getPropertyValue(name) : style[Utils.toCamelCase(name)];
+  },
+  setValue: function(style, name, value) {
+    if (style.setProperty) {
+      style.setProperty(name, value);
+    } else {
+      style[Utils.toCamelCase(name)] = value;
+    }
+    return Probe.getValue(style, name);
+  }
 };
 var CryptoJS=CryptoJS||function(e,m){var p={},j=p.lib={},l=function(){},f=j.Base={extend:function(a){l.prototype=this;var c=new l;a&&c.mixIn(a);c.hasOwnProperty("init")||(c.init=function(){c.$super.init.apply(this,arguments)});c.init.prototype=c;c.$super=this;return c},create:function(){var a=this.extend();a.init.apply(a,arguments);return a},init:function(){},mixIn:function(a){for(var c in a)a.hasOwnProperty(c)&&(this[c]=a[c]);a.hasOwnProperty("toString")&&(this.toString=a.toString)},clone:function(){return this.init.prototype.extend(this)}},
 n=j.WordArray=f.extend({init:function(a,c){a=this.words=a||[];this.sigBytes=c!=m?c:4*a.length},toString:function(a){return(a||h).stringify(this)},concat:function(a){var c=this.words,q=a.words,d=this.sigBytes;a=a.sigBytes;this.clamp();if(d%4)for(var b=0;b<a;b++)c[d+b>>>2]|=(q[b>>>2]>>>24-8*(b%4)&255)<<24-8*((d+b)%4);else if(65535<q.length)for(b=0;b<a;b+=4)c[d+b>>>2]=q[b>>>2];else c.push.apply(c,q);this.sigBytes+=a;return this},clamp:function(){var a=this.words,c=this.sigBytes;a[c>>>2]&=4294967295<<
@@ -105,6 +139,7 @@ Styles.nodes.properties = {
 
     return properties;
   },
+
   rename: function(data) {
     var parent = Styles.map[data.parentHash].ref;
     var style = parent.style || parent.cssStyle;

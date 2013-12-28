@@ -27,11 +27,12 @@ function(
     },
     settings: {
       defaults: {
-        'language': 'en'
-      },
-      colorFormat: 'hex'
+        language: 'en',
+        colorFormat: 'hex'
+      }
     },
     types: {
+      '-4': 'property-group',
       '-3': 'inline-style',
       '-2': 'file-style',
       '-1': 'property',
