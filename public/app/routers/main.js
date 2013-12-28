@@ -96,6 +96,7 @@ function(
       this.mainView.$('.version').text(app.data.version);
     },
 
+    // TODO: Needs refactoring
     checks: {},
     propertyCheck: function(device, property, values, callback, scope) {
       var id = device.get('id') + '-' + property.hash + '-' + (new Date()).getTime();
@@ -121,6 +122,7 @@ function(
       }
     },
 
+    // TODO: Needs refactoring
     changes: {},
     changeRequest: function(payload, callback, scope) {
       this.changes[payload.changeId] = {

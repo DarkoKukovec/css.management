@@ -27,11 +27,14 @@
 
 ### Property check
 1. Manager to client - property:check (list of values)
-2. Client to manager - property:check (list of values)
+2. Client to manager - property:check:response (list: true if ok, false if invalid, string if something else)
 
 ### Change request
 1. Manager to client - change:request
-2. Client to manager - change:response
+2. Client to manager - change:response (if the change happened, the server stores it too)
+
+### Reset (TODO)
+1. Manager to server & client - device:reset
 
 ### Client disconnected
 1. Server to manager - device:remove

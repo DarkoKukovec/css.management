@@ -23,6 +23,7 @@ function(
     },
 
     compare: function(node) {
+      // TODO: Needs refactoring
       // TODO: Find a way to differentiate inline stylesheets (type == -3)
       if (node.name !== this.get('name')) {
         return 0;
@@ -99,6 +100,7 @@ function(
     },
 
     addSimilar: function(style, device, StyleNodes) {
+      // TODO: Needs refactoring
       var children;
       if (this.get('type') === -1) {
         var data = this.toJSON();
