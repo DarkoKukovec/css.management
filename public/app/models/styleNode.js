@@ -29,12 +29,12 @@ function(
       }
       console.log(this.attributes, node)
       if (node.type != this.get('type')) {
-        if (node.type === -1 && this.get('type') === -4 && node.name === this.get('name')) {
+        if (node.type === -1 && this.get('type') === -4 && node.name === this.get('name') && !this.valueCompare(node.value)) {
           return 1;
         }
         return 0;
       }
-      if (node.type === -1) {
+      if (node.type === -1 && !this.valueCompare(node.value)) {
         return 1;
       }
 
@@ -118,18 +118,23 @@ function(
         children = this.get('children');
       }
       var me = this;
-      if (children.hasValue(style.value)) {
-        this.updateStyle(style, device);
-      } else {
+      var found = false;
+      children.each(function(item) {
+        if (item.valueCompare(style.value)) {
+          found = true;
+          item.updateStyle(style, device);
+        }
+      });
+      if (!found) {
         app.router.propertyCheck(device, style, children.pluck('value'), function(results) {
           var devices = me.get('devices');
           devices[device.get('id')] = style.hash;
-          // The change event isn't triggered?
           // TODO: Take the strings results into account
           var pos = results.indexOf(false);
           if (pos === -1) {
             pos = results.length;
           }
+          // The change event isn't triggered?
           me.set('devices', devices).trigger('change:devices');
           me.get('children').addAt(pos, style, device, me);
             console.log(me.get('name'), style.value, 'new', results, pos);

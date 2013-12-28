@@ -181,6 +181,15 @@ Styles.nodes.properties = {
       style[Utils.toCamelCase(data.name)] = data.value;
     }
     var next = style.getPropertyValue ? style.getPropertyValue(data.name) : style[Utils.toCamelCase(data.name)];
+    if (next === '' && next !== prev) {
+      if (style.setProperty) {
+        style.setProperty(data.name, prev, data.important ? 'important' : null);
+      } else {
+        // TODO: !important
+        style[Utils.toCamelCase(data.name)] = prev;
+      }
+      next = prev;
+    }
     Connection.send('change:response', {
       hash: data.hash,
       data: data,
