@@ -57,14 +57,17 @@ function(
      ***/
 
     compare: function(node) {
-      // TODO: Needs refactoring
       // TODO: Find a way to differentiate inline stylesheets (type == -3)
       if (node.name !== this.get('name')) {
         // Nothing else to compare
         return 0;
       }
-      if (node.type === -1 && [-1, -4].indexOf(this.get('type')) !== -1 && !this.valueCompare(node.value)) {
-        // The current node is a property/group and the value is not the same
+      if (node.type === -1 && this.get('type') === -1 && !this.valueCompare(node.value)) {
+        // The current node is a property and the value is not the same
+        return 1;
+      }
+      if (node.type === -1 && this.get('type') === -4) {
+        // The current node is a group and the value is not the same
         return 1;
       }
       if (node.type != this.get('type')) {
@@ -108,10 +111,7 @@ function(
       // Update the basic attributes, add the device
       var data = _.omit(style, ['hash', 'children']);
       this.set(data);
-      var devices = this.get('devices');
-      devices[device.get('id')] = style.hash;
-      // The change event isn't triggered?
-      this.set('devices', devices).trigger('change:devices');
+      this.addDevice(device, style);
 
       if (style.children) {
         // Update the children
@@ -148,6 +148,7 @@ function(
         if (item.valueCompare(style.value)) {
           found = true;
           item.updateStyle(style, device);
+          me.addDevice(device, style);
         }
       });
       if (!found) {
@@ -159,18 +160,22 @@ function(
           values: children.pluck('value')
         }, function(data) {
           var results = data.results;
-          var devices = me.get('devices');
-          devices[device.get('id')] = style.hash;
+          me.addDevice(device, style);
           // TODO: Take the strings results into account
           var pos = results.indexOf(false);
           if (pos === -1) {
             pos = results.length;
           }
-          // The change event isn't triggered?
-          me.set('devices', devices).trigger('change:devices');
           me.get('children').addAt(pos, style, device, me);
         }, this);
       }
+    },
+
+    addDevice: function(device, style) {
+      var devices = this.get('devices');
+      devices[device.get('id')] = style.hash;
+      // The change event isn't triggered?
+      this.set('devices', devices).trigger('change:devices');
     },
 
     removeDevice: function(device) {
