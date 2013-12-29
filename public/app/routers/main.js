@@ -55,8 +55,8 @@ function(
       app.socket.on('device:add', $.proxy(app.router.devices.onAdd, this));
       app.socket.on('device:remove', $.proxy(app.router.devices.onRemove, this));
       app.socket.on('disconnect', $.proxy(app.router.onDisconnect, this));
-      app.socket.on('change:response', $.proxy(app.router.onChangeResponse, this));
-      app.socket.on('property:check', $.proxy(app.router.onPropertyCheck, this));
+      app.socket.on('change:response', app.comm.response);
+      app.socket.on('property:check', app.comm.response);
     },
 
     // Main view setup

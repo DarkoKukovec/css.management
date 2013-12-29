@@ -6,9 +6,7 @@ define([
 
 function(
     app,
-
     PropertyGroupView,
-
     NumericFieldsUtils
   ) {
   'use strict';
@@ -52,17 +50,18 @@ function(
         this.$('.auto-size').each(function() {
           app.autoSize($(this));
         });
-
         this.updateData();
       }
-
       return this;
     },
 
-    updateValue: function() {
-      this.$('.node-property-value').val(this.model.get('value'));
-      app.autoSize(this.$('.node-property-value'));
+    cleanup: function() {
+      this.off();
     },
+
+    /***
+     * UI event handlers
+     ***/
 
     onToggle: function() {
       var enabled = this.$('.property-toggle').prop('checked');
@@ -89,21 +88,6 @@ function(
       var value = NumericFieldsUtils.update(e, this.$('.node-property-value'));
     },
 
-    onDeviceCountUpdate: function() {
-      var deviceCount = this.model.getDevices().length;
-      this.$el[deviceCount ? 'show' : 'hide']();
-    },
-
-    updateData: function() {
-      if (!this.model.isColor()) {
-        this.$el.removeClass('color-node');
-      } else {
-        this.$el.addClass('color-node');
-        this.$('.node-color-indicator').css('background-color', this.model.get('value'));
-      }
-      this.$el[this.model.isOriginal() ? 'removeClass' : 'addClass']('changed-node');
-    },
-
     onReset: function() {
       this.model.resetData();
       this.$('.node-property-name').val(this.model.get('name'));
@@ -112,16 +96,6 @@ function(
         this.$('.property-toggle').click();
       }
       this.updateValue();
-    },
-
-    setActive: function(e) {
-      Backbone.trigger('sidebar:node:set', this.model);
-      if (e.target.select) {
-        setTimeout(function() {
-          e.target.select();
-        }, 1);
-      }
-      return false;
     },
 
     onCheckboxFocus: function(e) {
@@ -142,8 +116,38 @@ function(
       }
     },
 
-    cleanup: function() {
-      this.off();
+    /***
+     * Utils
+     ***/
+
+    updateValue: function() {
+      this.$('.node-property-value').val(this.model.get('value'));
+      app.autoSize(this.$('.node-property-value'));
+    },
+
+    onDeviceCountUpdate: function() {
+      var deviceCount = this.model.getDevices().length;
+      this.$el[deviceCount ? 'show' : 'hide']();
+    },
+
+    updateData: function() {
+      if (!this.model.isColor()) {
+        this.$el.removeClass('color-node');
+      } else {
+        this.$el.addClass('color-node');
+        this.$('.node-color-indicator').css('background-color', this.model.get('value'));
+      }
+      this.$el[this.model.isOriginal() ? 'removeClass' : 'addClass']('changed-node');
+    },
+
+    setActive: function(e) {
+      Backbone.trigger('sidebar:node:set', this.model);
+      if (e.target.select) {
+        setTimeout(function() {
+          e.target.select();
+        }, 1);
+      }
+      return false;
     }
   });
 

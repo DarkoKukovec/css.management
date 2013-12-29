@@ -101,6 +101,40 @@ function(
 
   app.getId();
 
+  app.comm = (function() {
+    var callbacks = {};
+
+    function request(tag, data, callback, scope) {
+      var id = tag + '-' + (new Date()).getTime() + '-' + Math.random();
+      callbacks[id] = {
+        id: id,
+        tag: tag,
+        callback: callback,
+        scope: scope,
+        counter: tag === 'change:request' ? _.keys(data.payload.devices).length : 1
+      };
+      data.requestId = id;
+      data.session = app.data.session;
+      app.socket.emit(tag, data);
+    }
+
+    function response(data) {
+      var c = callbacks[data.requestId];
+      if (c) {
+        c.callback.call(c.scope, data);
+        c.counter--;
+        if (c.counter === 0) {
+          delete callbacks[data.requestId];
+        }
+      }
+    }
+
+    return {
+      request: request,
+      response: response
+    };
+  })();
+
   // Localize or create a new JavaScript Template object.
   var JST = window.JST = window.JST || {};
 
