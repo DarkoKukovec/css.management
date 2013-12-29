@@ -96,50 +96,6 @@ function(
       this.mainView.$('.version').text(app.data.version);
     },
 
-    // TODO: Needs refactoring
-    checks: {},
-    propertyCheck: function(device, property, values, callback, scope) {
-      var id = device.get('id') + '-' + property.hash + '-' + (new Date()).getTime();
-      this.checks[id] = {
-        id: id,
-        callback: callback,
-        scope: scope
-      };
-      app.socket.emit('property:check', {
-        device: device.get('id'),
-        session: app.data.session,
-        property: property.hash,
-        parent: property.parentHash,
-        values: values,
-        checkId: id
-      });
-    },
-    onPropertyCheck: function(data) {
-      console.log('Property check', data);
-      if (this.checks[data.checkId]) {
-        var check = this.checks[data.checkId];
-        check.callback.call(check.scope, data.results);
-      }
-    },
-
-    // TODO: Needs refactoring
-    changes: {},
-    changeRequest: function(payload, callback, scope) {
-      this.changes[payload.changeId] = {
-        id: payload.changeId,
-        callback: callback,
-        scope: scope
-      };
-      app.socket.emit('change:request', payload);
-    },
-    onChangeResponse: function(data) {
-      console.log('Change response', data);
-      if (this.changes[data.changeId]) {
-        var change = this.changes[data.changeId];
-        change.callback.call(change.scope, data);
-      }
-    },
-
     onDisconnect: function() {
       console.log('Disconnected');
       // TODO: Show a dialog, option to refresh the page (maybe even to reconnect)

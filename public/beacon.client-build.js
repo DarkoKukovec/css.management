@@ -1,4 +1,4 @@
-/*! styl.io - v0.0.1 - 2013-12-28
+/*! styl.io - v0.0.1 - 2013-12-29
 * Copyright (c) 2013 ; Licensed  */
 var Change = {
   exec: function(data) {
@@ -49,7 +49,7 @@ var Probe = {
     Connection.send('property:check:response', {
       results: response,
       session: data.session,
-      checkId: data.checkId,
+      requestId: data.requestId
     });
   },
   getValue: function(style, name) {
@@ -161,7 +161,8 @@ Styles.nodes.properties = {
       hash: data.hash,
       data: data,
       newValue: next,
-      change: !!next
+      change: !!next,
+      requestId: data.requestId
     });
   },
   change: function(data) {
@@ -195,7 +196,8 @@ Styles.nodes.properties = {
       data: data,
       oldValue: prev,
       newValue: next,
-      change: prev !== next
+      change: prev !== next,
+      requestId: data.requestId
     });
   },
   remove: function(data) {
@@ -212,7 +214,8 @@ Styles.nodes.properties = {
       hash: data.hash,
       data: data,
       newValue: next,
-      change: !next
+      change: !next,
+      requestId: data.requestId
     });
   }
 };

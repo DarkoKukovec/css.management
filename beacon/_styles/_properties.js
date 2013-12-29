@@ -35,7 +35,8 @@ Styles.nodes.properties = {
       hash: data.hash,
       data: data,
       newValue: next,
-      change: !!next
+      change: !!next,
+      requestId: data.requestId
     });
   },
   change: function(data) {
@@ -69,7 +70,8 @@ Styles.nodes.properties = {
       data: data,
       oldValue: prev,
       newValue: next,
-      change: prev !== next
+      change: prev !== next,
+      requestId: data.requestId
     });
   },
   remove: function(data) {
@@ -86,7 +88,8 @@ Styles.nodes.properties = {
       hash: data.hash,
       data: data,
       newValue: next,
-      change: !next
+      change: !next,
+      requestId: data.requestId
     });
   }
 };

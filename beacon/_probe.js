@@ -20,7 +20,7 @@ var Probe = {
     Connection.send('property:check:response', {
       results: response,
       session: data.session,
-      checkId: data.checkId,
+      requestId: data.requestId
     });
   },
   getValue: function(style, name) {

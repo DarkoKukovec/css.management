@@ -132,12 +132,12 @@ function(
           data.devices[id] = hash;
         });
 
-        this.set('type', -4);
         this.set('children', new StyleNodes());
         children = this.get('children');
         children.add(data);
         children.first().parentNode = this;
         children.first().listenerInit();
+        this.set('type', -4);
       } else {
         children = this.get('children');
       }
@@ -152,7 +152,13 @@ function(
       });
       if (!found) {
         // Check with the device what values are supported
-        app.router.propertyCheck(device, style, children.pluck('value'), function(results) {
+        app.comm.request('property:check', {
+          device: device.get('id'),
+          property: style.hash,
+          parent: style.parentHash,
+          values: children.pluck('value')
+        }, function(data) {
+          var results = data.results;
           var devices = me.get('devices');
           devices[device.get('id')] = style.hash;
           // TODO: Take the strings results into account
@@ -163,7 +169,6 @@ function(
           // The change event isn't triggered?
           me.set('devices', devices).trigger('change:devices');
           me.get('children').addAt(pos, style, device, me);
-            console.log(me.get('name'), style.value, 'new', results, pos);
         }, this);
       }
     },
