@@ -16,5 +16,8 @@ var Startup = {
   bindListeners: function() {
     Connection.on('change:request', Change.exec);
     Connection.on('property:check', Probe.check);
+    Connection.on('reset', function() {
+      window.location.reload();
+    });
   }
 };

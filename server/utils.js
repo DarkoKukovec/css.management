@@ -39,7 +39,7 @@ getPlatformInfo = function(userAgent) {
   return platformInfo;
 };
 
-normalizeNodes = function(style) {
+normalizeNodes = function(style, map, revertCallback) {
   for (var i = 0; i < style.length; i++) {
 
     if (style[i].type == 'import') {
@@ -49,8 +49,57 @@ normalizeNodes = function(style) {
     if (style[i].type == -3) {
       style[i].name = 'inline#' + style[i].hash.substr(0, 6);
     }
+    var node = map[style[i].hash];
+    if (node) {
+      // Set the received values as original but revert them on the client to old ones if they changed in the meantime
+      // Idea:
+      //  if original is same as before -> revert to the current state
+      //  else ignore
+      var change = false;
+      var ignore = false;
+
+      if (node.originalName !== style[i].name) {
+        ignore = true;
+        node.originalName = node.name = style[i].name;
+      } else if (node.name !== style[i].name) {
+        style[i].name = node.name;
+        change = true;
+      }
+
+      if (node.originalValue !== style[i].value) {
+        ignore = true;
+        node.originalValue = node.value = style[i].value;
+      } else if (node.value !== style[i].value) {
+        style[i].value = node.value;
+        change = true;
+      }
+
+      if (node.originalImportant !== style[i].important) {
+        ignore = true;
+        node.originalImportant = node.important = style[i].important;
+      } else if (node.important !== style[i].important) {
+        style[i].important = node.important;
+        change = true;
+      }
+
+      if (change && !ignore) {
+        revertCallback(node);
+      }
+    } else {
+      map[style[i].hash] = {
+        hash: style[i].hash,
+        parentHash: style[i].parentHash,
+        originalName: style[i].name,
+        originalValue: style[i].value,
+        originalImportant: style[i].important,
+        name: style[i].name,
+        value: style[i].value,
+        important: style[i].important,
+        type: style[i].type
+      };
+    }
     if ('children' in style[i]) {
-      normalizeNodes(style[i].children);
+      normalizeNodes(style[i].children, map, revertCallback);
     }
   }
 };

@@ -5,6 +5,7 @@ if (!socket) {
 
 var managers = {};
 var clients = {};
+var map = {};
 
 socket.on('connection', function(client) {
 
@@ -26,7 +27,30 @@ socket.on('connection', function(client) {
       }
     }
 
-    normalizeNodes(data.style);
+    map[session] = map[session] || {};
+    map[session][id] = map[session][id] || {};
+    normalizeNodes(data.style, map[session][id], function(style) {
+            // hash: hash,
+            // parentHash: parent.get('devices')[device],
+            // type: model.get('type'),
+            // oldName: model.previous('name'),
+            // name: model.get('name'),
+            // value: model.get('value'),
+            // important: model.get('important'),
+            // action: action
+      client.emit('change:request', {
+        session: session,
+        requestId: false,
+        hash: style.hash,
+        parentHash: style.parentHash,
+        type: style.type,
+        oldName: style.originalName,
+        name: style.name,
+        value: style.value,
+        important: style.originalImportant,
+        action: 'rename'
+      });
+    });
     clients[session] = clients[session] || {};
     clients[session][id] = {
       id: id,
@@ -44,6 +68,8 @@ socket.on('connection', function(client) {
   client.on('change:response', function(data) {
     if (data.change) {
       var c = clients[data.session][data.device];
+      map[data.session][data.device][data.hash].name = data.data.name;
+      map[data.session][data.device][data.hash].value = data.newValue;
       updateNode(c.data.style, data.hash, data.data.name, data.newValue);
     }
     if (managers[data.session]) {
