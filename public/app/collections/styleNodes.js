@@ -9,6 +9,12 @@ function(
   var StyleNodes = Backbone.Collection.extend({
     model: StyleNode,
 
+    activeCount: 0,
+
+    initialize: function() {
+      this.on('devices:update', this.onDevicesChange, this);
+    },
+
     updateStyles: function(device, styles, parent) {
       var lastAddedIndex = -1;
       for (var i = 0; i < styles.length; i++) {
@@ -56,6 +62,23 @@ function(
       item.init(target, device, StyleNodes);
       item.parentNode = parent;
       this.add(item, {at: index});
+    },
+
+    onDevicesChange: function() {
+      var count = 0;
+      this.each(function(item) {
+        if (_.keys(item.get('devices')).length > 0) {
+          count++;
+        }
+      });
+      if (count != this.activeCount) {
+        this.activeCount = count;
+        this.trigger('children:change');
+      }
+    },
+
+    getActiveCount: function() {
+      return this.activeCount;
     }
   });
 

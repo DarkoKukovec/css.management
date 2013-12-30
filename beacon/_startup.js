@@ -6,9 +6,11 @@ var Startup = {
     Utils.log('Style ' + (end - start));
     Connection.init();
     Startup.bindListeners();
+    var id = Utils.getID();
     Connection.send('client:init', {
-      id: Utils.getID(),
+      id: id,
       session: Utils.getSession(),
+      connectionId: id + '-' + (new Date()).getTime(),
       style: Utils.serialize(Styles.all),
       userAgent: window.navigator.userAgent
     });

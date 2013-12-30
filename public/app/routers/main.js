@@ -52,8 +52,8 @@ function(
       // Connection & listeners
       app.socket = io.connect(location.protocol + '//' + location.host);
       app.socket.on('manager:init', $.proxy(app.router.onInit, this));
-      app.socket.on('device:add', $.proxy(app.router.devices.onAdd, this));
-      app.socket.on('device:remove', $.proxy(app.router.devices.onRemove, this));
+      app.socket.on('device:add', $.proxy(app.router.devices.onAdd, app.router.devices));
+      app.socket.on('device:remove', $.proxy(app.router.devices.onRemove, app.router.devices));
       app.socket.on('disconnect', $.proxy(app.router.onDisconnect, this));
       app.socket.on('change:response', app.comm.response);
       app.socket.on('property:check', app.comm.response);

@@ -14,7 +14,7 @@ function(app) {
     },
 
     initialize: function() {
-      this.listenTo(this.model, 'change:devices', this.onDeviceChange, this);
+      this.listenTo(this.model, 'devices:update', this.onDeviceChange, this);
       this.listenTo(this.model, 'change:name', this.onNameChange, this);
     },
 

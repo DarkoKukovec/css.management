@@ -142,9 +142,10 @@ socket.on('connection', function(client) {
       id = client.clientID;
       clients.each(function(clientList, session) {
         if (clientList[id]) {
+          var connectionId = clientList[id].data.connectionId;
           delete clientList[id];
           if (managers[session]) {
-            managers[session].comm.emit('device:remove', id);
+            managers[session].comm.emit('device:remove', {id: id, connectionId: connectionId });
           }
         }
       });

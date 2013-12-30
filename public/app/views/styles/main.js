@@ -10,7 +10,7 @@ function(
     tagName: 'li',
 
     initialize: function() {
-      this.listenTo(this.model, 'change:devices', this.onDevicesChange, this);
+      this.listenTo(this.model, 'devices:update', this.onDevicesChange, this);
     },
 
     render: function() {
@@ -35,10 +35,6 @@ function(
     onDevicesChange: function() {
       var deviceCount = this.model.getDevices().length;
       this.$el[deviceCount ? 'show' : 'hide']();
-    },
-
-    cleanup: function() {
-      this.off();
     }
   });
 

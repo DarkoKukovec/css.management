@@ -8,6 +8,8 @@ function(
   'use strict';
   var Router = Backbone.Router.extend({
 
+    updating: {},
+
     onAdd: function(data) {
       console.log('New device', data);
       var device = app.collections.devices.get(data.id);
@@ -22,20 +24,34 @@ function(
         });
         device = app.collections.devices.get(data.id);
       }
-
-      // When going trough the styles, references to the device have to be removed
-      // for every style that this device doesn't contain anymore
-      app.collections.files.updateStyles(device, data.style);
+      this.updateStyles(device, data.style);
     },
 
-    onRemove: function(deviceId) {
-      console.log('Device gone', deviceId);
-      var device = app.collections.devices.get(deviceId);
+    onRemove: function(data) {
+      console.log('Device gone', data.id);
+      var device = app.collections.devices.get(data.id);
+      if (device.get('connectionId') !== data.connectionId) {
+        return;
+      }
       device.set('connected', false);
+      this.updateStyles(device, device.get('style'));
+    },
 
-      // for every item that references the disconnected device
-      // The reference has to stay in order to be able to reapply the styles on refresh
-      app.collections.files.removeStyles(device, device.get('style'));
+    updateStyles: function(device, style) {
+      var id = device.get('id');
+      if (this.updating[id]) {
+        var me = this;
+        this.updating = function() {
+          me.updateStyles(device, style, id);
+        };
+        return;
+      }
+      this.updating[id] = true;
+      app.collections.files.updateStyles(device, style);
+      if (typeof this.updating[id] === 'function') {
+        this.updating[id].call(this);
+      }
+      this.updating[id] = false;
     }
 
   });

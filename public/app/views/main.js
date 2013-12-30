@@ -67,6 +67,9 @@ function(
     updateDevices: function() {
       var active = app.collections.devices.available();
       this.$el[active ? 'removeClass' : 'addClass']('no-devices');
+      if (!active) {
+        Backbone.trigger('sidebar:clear');
+      }
     },
 
     showDevices: function(ListView) {

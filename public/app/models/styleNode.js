@@ -126,14 +126,11 @@ function(
         var data = this.toJSON();
 
         // Make a deep copy of the devices
-        var nodeDevices = this.get('devices');
-        data.devices = {};
-        _.each(nodeDevices, function(hash, id) {
-          data.devices[id] = hash;
-        });
+        data.devices = $.extend(true, {}, this.get('devices'));
 
         this.set('children', new StyleNodes());
         children = this.get('children');
+        children.on('children:change', this.onChildrenRemove, this);
         children.add(data);
         children.first().parentNode = this;
         children.first().listenerInit();
@@ -174,20 +171,36 @@ function(
     addDevice: function(device, style) {
       var devices = this.get('devices');
       devices[device.get('id')] = style.hash;
-      // The change event isn't triggered?
-      this.set('devices', devices).trigger('change:devices');
+      this.trigger('devices:update');
     },
 
     removeDevice: function(device) {
-      // Remove the device from the node
-      var devices = this.get('devices');
-      delete devices[device.get('id')];
-      // The change event isn't triggered?
-      this.set('devices', devices).trigger('change:devices');
-
       if (this.get('children')) {
         // Remove the device from children
         this.get('children').removeStyles(device);
+      }
+
+      // Remove the device from the node
+      var devices = this.get('devices');
+      delete devices[device.get('id')];
+      this.trigger('devices:update');
+    },
+
+    onChildrenRemove: function() {
+      if (this.get('children').getActiveCount() === 1) {
+        var child = this.get('children').first();
+        var copy = ['name', 'value', 'important', 'originalName', 'originalValue', 'originalImportant'];
+        for (var i = 0; i < copy.length; i++) {
+          // Avoid the change event
+          this.attributes[copy[i]] = child.get(copy[i]);
+          // this.set({copy[i]: child.get(copy[i]) });
+        }
+        child.destroy();
+        // Remove all the listeners to prevent memory leaks
+        this.get('children').off('children:change', this.onChildrenRemove, this);
+        // If all the listeners are removed, the garbage collector *should* clean this up
+        this.set('children', null);
+        this.set('type', -1);
       }
     },
 
@@ -199,13 +212,13 @@ function(
     // TODO: PropertyGroup - UI transition from/to property
     // TODO: PropertyGroup - check correct property order
 
-    onNameChange: function(model, value) {
-      if (!model.get('enabled')) {
+    onNameChange: function() {
+      if (!this.get('enabled')) {
         return;
       }
 
       // TODO: Update property groups
-      this.trigger('groups:update', model);
+      this.trigger('groups:update', this);
 
       app.comm.request('change:request', {
         payload: this.getChangePayload('rename')
@@ -214,14 +227,14 @@ function(
       }, this);
     },
 
-    onValueChange: function(model) {
-      if (!model.get('enabled') || model.get('type') === -4) {
+    onValueChange: function() {
+      if (!this.get('enabled') || this.get('type') === -4) {
         return;
       }
 
       // TODO: Try to change the value for the properties before this in the group
       if (this.isGroupItem()) {
-        this.trigger('group:change:prev', model);
+        this.trigger('group:change:prev', this);
       }
 
       app.comm.request('change:request', {
