@@ -1,4 +1,4 @@
-/*! styl.io - v0.0.1 - 2013-12-29
+/*! styl.io - v0.0.1 - 2013-12-30
 * Copyright (c) 2013 ; Licensed  */
 var Change = {
   exec: function(data) {
@@ -9,7 +9,7 @@ var Change = {
 var Connection = {
   socket: null,
   init: function() {
-    Connection.socket = io.connect(Utils.getURL());
+    Connection.socket = io.connect('http://' + Utils.getHost());
   },
 
   on: function(tag, callback) {
@@ -324,10 +324,8 @@ Styles.nodes.style = {
   }
 };
 var Utils = {
-  getURL: function() {
-    var rawURL = document.getElementById('StylIO-beacon').src.split('/');
-    rawURL.pop();
-    return rawURL.join('/');
+  getHost: function() {
+    return window.appHost;
   },
   getID: function() {
     var id = Utils.getCookie('clientID');

@@ -9,6 +9,10 @@ function(
   var StyleItem = Backbone.View.extend({
     tagName: 'li',
 
+    initialize: function() {
+      this.listenTo(this.model, 'change:devices', this.onDevicesChange, this);
+    },
+
     render: function() {
       var type = app.types[this.model.get('type')];
       if (type === 'property-group') {
@@ -26,6 +30,11 @@ function(
       });
 
       return this;
+    },
+
+    onDevicesChange: function() {
+      var deviceCount = this.model.getDevices().length;
+      this.$el[deviceCount ? 'show' : 'hide']();
     },
 
     cleanup: function() {

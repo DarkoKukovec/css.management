@@ -1,8 +1,6 @@
 var Utils = {
-  getURL: function() {
-    var rawURL = document.getElementById('StylIO-beacon').src.split('/');
-    rawURL.pop();
-    return rawURL.join('/');
+  getHost: function() {
+    return window.appHost;
   },
   getID: function() {
     var id = Utils.getCookie('clientID');

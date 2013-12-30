@@ -866,6 +866,36 @@ body {
       body .footer .footer-container .version {
         text-align: right;
         -webkit-flex: 1; }
+  body .no-devices-message {
+    display: none; }
+  body .emoticon {
+    font-size: 56px;
+    text-shadow: 1px 1px 2px #777;
+    text-align: center;
+    color: #d5d5d5;
+    margin: -30px auto 20px auto; }
+  body .no-devices .sidebar {
+    display: none; }
+  body .no-devices .no-devices-message {
+    z-index: 20;
+    display: block;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center; }
+    body .no-devices .no-devices-message .card {
+      opacity: 1;
+      padding: 50px; }
+    body .no-devices .no-devices-message textarea {
+      border: 1px solid #ddd;
+      resize: false;
+      width: 100%;
+      margin: 20px -10px -12px -10px;
+      padding: 10px; }
 
 .dialog, .card {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);

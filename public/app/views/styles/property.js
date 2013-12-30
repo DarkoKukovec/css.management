@@ -32,7 +32,6 @@ function(
       this.listenTo(this.model, 'change', this.updateData);
       this.listenTo(this.model, 'change:type', this.render);
       this.listenTo(this.model, 'property:value:change', this.updateValue);
-      this.listenTo(this.model, 'change:devices', this.onDeviceCountUpdate, this);
     },
 
     render: function() {
@@ -123,11 +122,6 @@ function(
     updateValue: function() {
       this.$('.node-property-value').val(this.model.get('value'));
       app.autoSize(this.$('.node-property-value'));
-    },
-
-    onDeviceCountUpdate: function() {
-      var deviceCount = this.model.getDevices().length;
-      this.$el[deviceCount ? 'show' : 'hide']();
     },
 
     updateData: function() {

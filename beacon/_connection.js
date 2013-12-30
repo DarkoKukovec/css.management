@@ -1,7 +1,7 @@
 var Connection = {
   socket: null,
   init: function() {
-    Connection.socket = io.connect(Utils.getURL());
+    Connection.socket = io.connect('http://' + Utils.getHost());
   },
 
   on: function(tag, callback) {

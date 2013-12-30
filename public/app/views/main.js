@@ -29,10 +29,20 @@ function(
       'click': 'clearSidebar'
     },
 
+    initialize: function() {
+      this.listenTo(app.collections.devices, 'add', this.updateDevices, this);
+      this.listenTo(app.collections.devices, 'change:connected', this.updateDevices, this);
+    },
+
     render: function() {
       var me = this;
+      var data = {
+        host: location.host,
+        session: app.data.session,
+        app_name: app.data.app_name
+      };
 
-      this.$el.html(this.template(app.data));
+      this.$el.html(this.template(data));
 
       var ListView = Backbone.ListView.extend({});
 
@@ -49,7 +59,14 @@ function(
       var footer = new FooterView();
       this.$('.footer').append(footer.render().$el);
 
+      this.updateDevices();
+
       return this;
+    },
+
+    updateDevices: function() {
+      var active = app.collections.devices.available();
+      this.$el[active ? 'removeClass' : 'addClass']('no-devices');
     },
 
     showDevices: function(ListView) {

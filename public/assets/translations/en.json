@@ -6,5 +6,6 @@
   "devices": "Devices",
   "select_node": "Select a node to see its details",
   "docs": "Documentation",
-  "more_info": "More info"
+  "more_info": "More info",
+  "no_devices": "There are currently no active devices.<br />To start styling, add the following code to the web page you want to style:"
 }

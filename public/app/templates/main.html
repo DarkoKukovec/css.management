@@ -2,6 +2,13 @@
   <span class="app-name"><%= app_name %></span>
   <div class="files"></div>
 </div>
+<div class="no-devices-message">
+  <div class="card">
+    <div class="emoticon">:-(</div>
+    <div class="message"><%= window.I18n.t('no_devices') %></div>
+    <textarea cols="80" rows="2" class="device-code">&lt;script type="text/javascript" src="http://<%= host %>/beacon.js#<%= session %>" &gt;&lt;/script&gt;</textarea>
+  </div>
+</div>
 <div class="devices-container"></div>
 <div class="styles-container"></div>
 <div class="sidebar-container"></div>

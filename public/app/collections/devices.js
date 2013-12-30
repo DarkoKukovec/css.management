@@ -7,7 +7,11 @@ function(
   ) {
   'use strict';
   var Devices = Backbone.Collection.extend({
-    model: DeviceModel
+    model: DeviceModel,
+
+    available: function() {
+      return !!this.findWhere({connected: true});
+    }
   });
 
   return Devices;

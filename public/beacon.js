@@ -42,6 +42,7 @@ window.addEventListener('load', function() {
   var urlData = getScript();
   var baseUrl = urlData.host;
   window.appSession = urlData.session;
+  window.appHost = urlData.host;
 
   // Load socket.io
   var io = document.createElement('script');
