@@ -103,6 +103,9 @@ function(
         return;
       }
       var name = this.activeModel.get('name');
+      if (this.activeModel.get('type') === 4) {
+        name = '@media';
+      }
       if (docModel) {
         if (docModel.get('name') !== name) {
           return;

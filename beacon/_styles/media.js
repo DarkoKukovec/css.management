@@ -18,5 +18,23 @@ Styles.nodes.media = {
     }
 
     return media;
+  },
+
+  rename: function(data) {
+    var parent = Styles.map[data.parentHash].ref;
+    var media = Styles.map[data.hash].ref;
+
+    console.log(media);
+    var prev = media.media.mediaText;
+    media.media.mediaText = data.name;
+    var next = media.media.mediaText;
+
+    Connection.send('change:response', {
+      hash: data.hash,
+      data: data,
+      newValue: next,
+      change: next === data.oldName || (next != prev ? next : false),
+      requestId: data.requestId
+    });
   }
 };

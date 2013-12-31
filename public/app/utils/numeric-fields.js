@@ -90,9 +90,7 @@ define([], function() {
       var oSel = document.selection.createRange();
       oSel.moveStart('character', -el.value.length);
       position = oSel.text.length;
-    }
-
-    else if (el.selectionStart || el.selectionStart == '0') {
+    } else if (el.selectionStart || el.selectionStart == '0') {
       position = el.selectionStart;
     }
 

@@ -31,6 +31,8 @@ function(
       console.log('Device gone', data.id);
       var device = app.collections.devices.get(data.id);
       if (device.get('connectionId') !== data.connectionId) {
+        // When refreshing a device, it foten emmits the add event before the disconnect event
+        // In that case, the disconnect event should be ignored
         return;
       }
       device.set('connected', false);
@@ -38,6 +40,8 @@ function(
     },
 
     updateStyles: function(device, style) {
+      // If a device wants to update it styles more than once,
+      // let the current update finish and then refresh it with the last requested update
       var id = device.get('id');
       if (this.updating[id]) {
         var me = this;

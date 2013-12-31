@@ -1,5 +1,16 @@
 #styl.io
 
+## Usage
+1. npm install -g grunt-cli
+2. clone this repo
+3. run 'npm install in repo folder'
+4. run 'grunt'
+5. open http://localhost:3000/
+
+## Problems to solve
+* different, but contant hashes for inline styles
+* constant hashes for style rules (currently based on the rule name)?
+
 ##Flow
 1. The client gets it's styles
 2. The client sends the styles to the server

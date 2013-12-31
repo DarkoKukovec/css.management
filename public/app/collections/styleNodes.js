@@ -79,7 +79,6 @@ function(
           for (var i = 0; i < keys.length; i++) {
             if (devices[keys[i]]) {
               duplicate = true;
-              console.log('duplicate', model, item, keys[i])
               item.removeDevice(app.collections.devices.get(keys[i]));
             }
           }

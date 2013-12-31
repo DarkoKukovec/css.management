@@ -1,4 +1,4 @@
-/*! styl.io - v0.0.1 - 2013-12-30
+/*! styl.io - v0.0.1 - 2013-12-31
 * Copyright (c) 2013 ; Licensed  */
 var Change = {
   exec: function(data) {
@@ -311,6 +311,24 @@ Styles.nodes.media = {
     }
 
     return media;
+  },
+
+  rename: function(data) {
+    var parent = Styles.map[data.parentHash].ref;
+    var media = Styles.map[data.hash].ref;
+
+    console.log(media);
+    var prev = media.media.mediaText;
+    media.media.mediaText = data.name;
+    var next = media.media.mediaText;
+
+    Connection.send('change:response', {
+      hash: data.hash,
+      data: data,
+      newValue: next,
+      change: next === data.oldName || (next != prev ? next : false),
+      requestId: data.requestId
+    });
   }
 };
 Styles.nodes.style = {
