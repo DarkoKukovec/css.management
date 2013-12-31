@@ -131,6 +131,7 @@ function(
         this.set('children', new StyleNodes());
         children = this.get('children');
         children.on('children:change', this.onChildrenRemove, this);
+        children.isGroup = true;
         children.add(data);
         children.first().parentNode = this;
         children.first().listenerInit();
@@ -142,13 +143,14 @@ function(
       var found = false;
       // Check if there is already a property with the same value
       children.each(function(item) {
-        if (item.valueCompare(style.value)) {
+        // Check if the item exists - if not, the group was degraded to a property in the meantime
+        if (item && item.valueCompare(style.value)) {
           found = true;
           item.updateStyle(style, device);
           me.addDevice(device, style);
         }
       });
-      if (!found) {
+      if (!found && children) {
         // Check with the device what values are supported
         app.comm.request('property:check', {
           device: device.get('id'),
@@ -171,7 +173,7 @@ function(
     addDevice: function(device, style) {
       var devices = this.get('devices');
       devices[device.get('id')] = style.hash;
-      this.trigger('devices:update');
+      this.trigger('devices:update', this);
     },
 
     removeDevice: function(device) {
@@ -183,7 +185,7 @@ function(
       // Remove the device from the node
       var devices = this.get('devices');
       delete devices[device.get('id')];
-      this.trigger('devices:update');
+      this.trigger('devices:update', this);
     },
 
     onChildrenRemove: function() {

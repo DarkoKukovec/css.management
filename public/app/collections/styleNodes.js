@@ -11,6 +11,8 @@ function(
 
     activeCount: 0,
 
+    isGroup: false,
+
     initialize: function() {
       this.on('devices:update', this.onDevicesChange, this);
     },
@@ -61,10 +63,33 @@ function(
       var item = new StyleNode({hash: target.hash});
       item.init(target, device, StyleNodes);
       item.parentNode = parent;
+      this.once('add', this.onDevicesChange, this);
       this.add(item, {at: index});
     },
 
-    onDevicesChange: function() {
+    onDevicesChange: function(model) {
+      if (this.isGroup) {
+        var keys = _.keys(model.get('devices'));
+        var duplicate = false;
+        this.each(function(item) {
+          if (item === model) {
+            return;
+          }
+          var devices = item.get('devices');
+          for (var i = 0; i < keys.length; i++) {
+            if (devices[keys[i]]) {
+              duplicate = true;
+              console.log('duplicate', model, item, keys[i])
+              item.removeDevice(app.collections.devices.get(keys[i]));
+            }
+          }
+        });
+
+        if (duplicate) {
+          return;
+        }
+      }
+
       var count = 0;
       this.each(function(item) {
         if (_.keys(item.get('devices')).length > 0) {
