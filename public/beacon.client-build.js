@@ -1,5 +1,5 @@
-/*! styl.io - v0.0.1 - 2013-12-31
-* Copyright (c) 2013 ; Licensed  */
+/*! styl.io - v0.0.1 - 2014-01-01
+* Copyright (c) 2014 ; Licensed  */
 var Change = {
   exec: function(data) {
     // changeId, hash, parentHash, type, name, value, action
@@ -93,7 +93,7 @@ var Startup = {
   bindListeners: function() {
     Connection.on('change:request', Change.exec);
     Connection.on('property:check', Probe.check);
-    Connection.on('reset', function() {
+    Connection.on('device:reset', function() {
       window.location.reload();
     });
   }

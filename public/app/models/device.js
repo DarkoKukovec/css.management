@@ -20,6 +20,10 @@ function(
         this.set('name', this.get('nickname') || this.get('id'));
       });
       this.set('nickname', app.getSettings('device-' + this.get('id')));
+    },
+
+    resetStyles: function() {
+      app.comm.request('device:reset', { deviceId: this.get('id') });
     }
   });
 

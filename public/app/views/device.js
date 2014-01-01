@@ -11,7 +11,8 @@ function(app) {
 
     events: {
       'change input[type=checkbox]': 'onCheckboxChange',
-      'click .device-edit': 'onDeviceEditClick'
+      'click .device-edit': 'onDeviceEditClick',
+      'click .device-reset': 'onDeviceResetClick'
     },
 
     initialize: function() {
@@ -48,6 +49,13 @@ function(app) {
 
     onDeviceEditClick: function() {
       this.trigger('device:edit', this.model);
+      // TODO: Do this with a custom dialog?
+      var name = prompt('Device name:', this.model.get('nickname'));
+      this.model.set('nickname', name);
+    },
+
+    onDeviceResetClick: function() {
+      this.model.resetStyles();
     }
 
   });

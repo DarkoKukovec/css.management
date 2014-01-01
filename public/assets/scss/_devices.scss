@@ -25,10 +25,24 @@
           background-image: url(../images/settings.png);
           position: absolute;
           top: 8px;
-          right: 8px;
+          right: 26px;
         }
 
         &:hover .device-edit {
+          display: block;
+        }
+
+        .device-reset {
+          display: none;
+          width: 16px;
+          height: 16px;
+          background-image: url(../images/reset.png);
+          position: absolute;
+          top: 8px;
+          right: 8px;
+        }
+
+        &:hover .device-reset {
           display: block;
         }
 

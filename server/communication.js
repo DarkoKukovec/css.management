@@ -127,6 +127,11 @@ socket.on('connection', function(client) {
     });
   });
 
+  client.on('device:reset', function(data) {
+    map[data.session][data.deviceId] = {};
+    clients[data.session][data.deviceId].comm.emit('device:reset', null);
+  });
+
   client.on('disconnect', function(){
     var id;
     // Check clients and managers and clear the necesary data

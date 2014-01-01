@@ -106,13 +106,15 @@ function(
 
     function request(tag, data, callback, scope) {
       var id = tag + '-' + (new Date()).getTime() + '-' + Math.random();
-      callbacks[id] = {
-        id: id,
-        tag: tag,
-        callback: callback,
-        scope: scope,
-        counter: tag === 'change:request' ? _.keys(data.payload.devices).length : 1
-      };
+      if (typeof callback === 'function') {
+        callbacks[id] = {
+          id: id,
+          tag: tag,
+          callback: callback,
+          scope: scope,
+          counter: tag === 'change:request' ? _.keys(data.payload.devices).length : 1
+        };
+      }
       data.requestId = id;
       data.session = app.data.session;
       app.socket.emit(tag, data);

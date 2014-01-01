@@ -970,8 +970,18 @@ body {
         background-image: url(../images/settings.png);
         position: absolute;
         top: 8px;
-        right: 8px; }
+        right: 26px; }
       .devices-container .devices-list li:hover .device-edit {
+        display: block; }
+      .devices-container .devices-list li .device-reset {
+        display: none;
+        width: 16px;
+        height: 16px;
+        background-image: url(../images/reset.png);
+        position: absolute;
+        top: 8px;
+        right: 8px; }
+      .devices-container .devices-list li:hover .device-reset {
         display: block; }
       .devices-container .devices-list li .dialog-title {
         font-size: 19px;
