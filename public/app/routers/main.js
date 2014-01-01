@@ -99,6 +99,7 @@ function(
     onDisconnect: function() {
       console.log('Disconnected');
       // TODO: Show a dialog, option to refresh the page (maybe even to reconnect)
+      Backbone.trigger('disconnect');
     }
 
   });

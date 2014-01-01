@@ -2,11 +2,17 @@
   <span class="app-name"><%= app_name %></span>
   <div class="files"></div>
 </div>
-<div class="no-devices-message">
+<div class="no-devices-message modal">
   <div class="card">
     <div class="emoticon">:-(</div>
     <div class="message"><%= window.I18n.t('no_devices') %></div>
     <textarea cols="80" rows="2" class="device-code">&lt;script type="text/javascript" src="http://<%= host %>/beacon.js#<%= session %>" &gt;&lt;/script&gt;</textarea>
+  </div>
+</div>
+<div class="disconnected-message modal">
+  <div class="card">
+    <div class="emoticon">:-(</div>
+    <div class="message"><%= window.I18n.t('disconnected_msg') %></div>
   </div>
 </div>
 <div class="devices-container"></div>

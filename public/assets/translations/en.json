@@ -7,5 +7,6 @@
   "select_node": "Select a node to see its details",
   "docs": "Documentation",
   "more_info": "More info",
-  "no_devices": "There are currently no active devices.<br />To start styling, add the following code to the web page you want to style:"
+  "no_devices": "There are currently no active devices.<br />To start styling, add the following code to the web page you want to style:",
+  "disconnected_msg": "You were disconnected from the server.<br />Check if the server is running and refresh this page to continue."
 }

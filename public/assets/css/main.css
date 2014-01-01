@@ -874,11 +874,8 @@ body {
     text-align: center;
     color: #d5d5d5;
     margin: -30px auto 20px auto; }
-  body .no-devices .sidebar {
-    display: none; }
-  body .no-devices .no-devices-message {
+  body .modal {
     z-index: 20;
-    display: block;
     position: absolute;
     top: 60px;
     left: 0;
@@ -887,6 +884,10 @@ body {
     display: -webkit-box;
     -webkit-box-pack: center;
     -webkit-box-align: center; }
+  body .no-devices .sidebar {
+    display: none; }
+  body .no-devices .no-devices-message {
+    display: -webkit-box; }
     body .no-devices .no-devices-message .card {
       opacity: 1;
       padding: 50px; }
@@ -896,6 +897,13 @@ body {
       width: 100%;
       margin: 20px -10px -12px -10px;
       padding: 10px; }
+  body .disconnected .devices-container, body .disconnected .styles-container, body .disconnected .sidebar-container {
+    opacity: 0.3; }
+  body .disconnected .disconnected-message {
+    display: -webkit-box; }
+    body .disconnected .disconnected-message .card {
+      opacity: 1;
+      padding: 50px; }
 
 .dialog, .card {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);

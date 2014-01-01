@@ -32,6 +32,7 @@ function(
     initialize: function() {
       this.listenTo(app.collections.devices, 'add', this.updateDevices, this);
       this.listenTo(app.collections.devices, 'change:connected', this.updateDevices, this);
+      this.listenTo(Backbone, 'disconnect', this.onDisconnect, this);
     },
 
     render: function() {
@@ -135,6 +136,10 @@ function(
       if (!isStyle && !isSidebar) {
         Backbone.trigger('sidebar:clear');
       }
+    },
+
+    onDisconnect: function() {
+      this.$el.addClass('disconnected');
     },
 
     cleanup: function() {
