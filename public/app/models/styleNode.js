@@ -219,6 +219,27 @@ function(
         return;
       }
 
+      if (!this.get('name')) {
+        // TODO: Remove the property
+        return;
+      }
+
+      if (!this.get('hash')) {
+        // A new node
+        var raw = (new Date()).getTime() + '-' + Math.random();
+        var hash = CryptoJS.SHA1(raw).toString();
+        this.set('hash', hash);
+        var devices = this.get('parentDevices');
+        var nodeDevices = {};
+        _.each(devices, function(h, device) {
+          nodeDevices[device] = hash;
+        });
+        this.set('devices', nodeDevices);
+        this.addStyle();
+        console.log(this)
+        return;
+      }
+
       // TODO: Update property groups
       this.trigger('groups:update', this);
 
@@ -230,7 +251,7 @@ function(
     },
 
     onValueChange: function() {
-      if (!this.get('enabled') || this.get('type') === -4) {
+      if (!this.get('enabled') || this.get('type') === -4 || !this.get('value')) {
         return;
       }
 

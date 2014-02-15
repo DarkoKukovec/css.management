@@ -21,7 +21,9 @@ requirejs.config({
 
     listview: '../assets/javascript/plugins/backbone.listview',
 
-    spectrum: '../assets/javascript/plugins/spectrum'
+    spectrum: '../assets/javascript/plugins/spectrum',
+
+    CryptoJS: '../assets/javascript/libs/CryptoJS'
   },
 
   shim: {
@@ -40,6 +42,10 @@ requirejs.config({
 
     listview: {
       deps: ['backbone']
+    },
+
+    CryptoJS: {
+      exports: 'CryptoJS'
     }
   }
 

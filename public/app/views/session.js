@@ -21,7 +21,7 @@ function(
 
       this.once('ready', function() {
         setTimeout(function() {
-          me.$('.dialog').addClass('display');
+          me.$('.dialog').parent().addClass('display');
         }, 500);
       });
 

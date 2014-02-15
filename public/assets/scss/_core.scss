@@ -30,6 +30,7 @@ body {
   input, textarea {
     outline: none;
     box-shadow: none;
+    min-width: 20px;
   }
 
   .header {
@@ -160,6 +161,11 @@ body {
     display: -webkit-box;
     -webkit-box-pack: center;
     -webkit-box-align: center;
+    display: none;
+
+    &.display {
+      display: block;
+    }
   }
 
   .no-devices {

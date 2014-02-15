@@ -14,6 +14,10 @@ function(
     className: 'node list-node node-style',
     template: app.fetchTemplate('styles/style'),
 
+    events: {
+      'click .new-property button': 'onNewClick'
+    },
+
     render: function() {
       var me = this;
       var data = this.model.toJSON();
@@ -34,6 +38,25 @@ function(
       app.autoSize(this.$('> .node-name .auto-size'));
 
       return this;
+    },
+
+    onNewClick: function() {
+      var me = this;
+      var children = this.model.get('children');
+      children.add({
+        type: -1,
+        parentDevices: this.model.get('devices'),
+        enabled: true,
+        hash: false,
+        parentHash: this.model.get('hash'),
+        name: ''
+      });
+      var node = children.last();
+      node.listenerInit();
+      node.parentNode = this.model;
+      setTimeout(function() {
+        me.$('.node-property-name').last().focus();
+      }, 10);
     },
 
     cleanup: function() {

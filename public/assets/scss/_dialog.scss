@@ -43,7 +43,16 @@
     }
   }
 
-  &.display{
+  &.display {
+    -webkit-transform: translate3d(0px, 0px, 0px) rotateX(0)  scale(1, 1);
+    -moz-transform:  translate3d(0px, 0px, 0px) rotateX(0)  scale(1, 1);
+    transform: translate3d(0px, 0px, 0px) rotateX(0)  scale(1, 1);
+    opacity: 1;
+  }
+}
+
+.display {
+  .dialog, .card {
     -webkit-transform: translate3d(0px, 0px, 0px) rotateX(0)  scale(1, 1);
     -moz-transform:  translate3d(0px, 0px, 0px) rotateX(0)  scale(1, 1);
     transform: translate3d(0px, 0px, 0px) rotateX(0)  scale(1, 1);

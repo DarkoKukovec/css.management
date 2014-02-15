@@ -68,6 +68,10 @@ socket.on('connection', function(client) {
   client.on('change:response', function(data) {
     if (data.change) {
       var c = clients[data.session][data.device];
+      if (!map[data.session][data.device][data.hash]) {
+        // New node
+        map[data.session][data.device][data.hash] = {};
+      }
       map[data.session][data.device][data.hash].name = data.data.name;
       map[data.session][data.device][data.hash].value = data.newValue;
       updateNode(c.data.style, data.hash, data.data.name, data.newValue);
