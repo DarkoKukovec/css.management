@@ -139,7 +139,8 @@ Styles.nodes.properties = {
         name: node[i],
         value: node.getPropertyValue(node[i]),
         important: node.getPropertyPriority && node.getPropertyPriority(node[i]) === 'important',
-        parent: parent
+        parent: parent,
+        enabled: true
       };
       properties.push(property);
     }
@@ -167,7 +168,8 @@ Styles.nodes.properties = {
       data: data,
       newValue: next,
       change: !!next,
-      requestId: data.requestId
+      requestId: data.requestId,
+      enabled: true
     });
   },
   change: function(data) {
@@ -202,7 +204,8 @@ Styles.nodes.properties = {
       oldValue: prev,
       newValue: next,
       change: prev !== next,
-      requestId: data.requestId
+      requestId: data.requestId,
+      enabled: true
     });
   },
   remove: function(data) {
@@ -220,7 +223,8 @@ Styles.nodes.properties = {
       data: data,
       newValue: next,
       change: !next,
-      requestId: data.requestId
+      requestId: data.requestId,
+      enabled: false
     });
   }
 };

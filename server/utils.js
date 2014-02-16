@@ -104,17 +104,22 @@ normalizeNodes = function(style, map, revertCallback) {
   }
 };
 
-updateNode = function(style, nodeHash, nodeName, nodeValue) {
+updateNode = function(style, nodeHash, nodeName, nodeValue, enabled) {
   for (var i = 0; i < style.length; i++) {
 
     if (style[i].hash == nodeHash) {
-      style[i].name = nodeName;
-      style[i].value = nodeValue;
+      if (enabled) {
+        style[i].name = nodeName;
+        style[i].value = nodeValue;
+        style[i].enabled = enabled;
+      } else {
+        style[i].enabled = false;
+      }
       return true;
     }
 
     if ('children' in style[i]) {
-      updateNode(style[i].children, nodeHash, nodeName, nodeValue);
+      updateNode(style[i].children, nodeHash, nodeName, nodeValue, enabled);
     }
   }
 };

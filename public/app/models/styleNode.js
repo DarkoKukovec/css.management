@@ -28,6 +28,7 @@ function(
       var data = _.omit(style, ['hash', 'children']);
       data.devices = {};
       data.devices[device.get('id')] = style.hash;
+      data.enabled = style.enabled !== false;
       this.set(data);
 
       this.set({
@@ -79,7 +80,7 @@ function(
 
     valueCompare: function(value) {
       // handle cases like "Arial, serif" (Chrome) & "Arial,serif" (Firefox)
-      var thisValue = this.get('value');
+      var thisValue = this.get('value') || '';
       value = value.replace(/\s\s/g, ' ').replace(/,\s/g, ',');
       thisValue = thisValue.replace(/\s\s/g, ' ').replace(/,\s/g, ',');
       return value === thisValue;

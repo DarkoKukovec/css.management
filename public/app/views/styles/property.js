@@ -51,6 +51,12 @@ function(
         });
         this.updateData();
       }
+
+      if (!this.model.get('enabled')) {
+        this.$el.addClass('disabled-property');
+        this.$('.property-toggle').get(0).checked = false;
+      }
+
       return this;
     },
 

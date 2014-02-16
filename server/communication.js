@@ -48,7 +48,7 @@ socket.on('connection', function(client) {
         name: style.name,
         value: style.value,
         important: style.originalImportant,
-        action: 'rename'
+        action: style.enabled ? 'rename' : 'remove'
       });
     });
     clients[session] = clients[session] || {};
@@ -72,9 +72,15 @@ socket.on('connection', function(client) {
         // New node
         map[data.session][data.device][data.hash] = {};
       }
-      map[data.session][data.device][data.hash].name = data.data.name;
-      map[data.session][data.device][data.hash].value = data.newValue;
-      updateNode(c.data.style, data.hash, data.data.name, data.newValue);
+      if (data.enabled) {
+        map[data.session][data.device][data.hash].name = data.data.name;
+        map[data.session][data.device][data.hash].value = data.newValue;
+        updateNode(c.data.style, data.hash, data.data.name, data.newValue, true);
+        map[data.session][data.device][data.hash].enabled = true;
+      } else {
+        map[data.session][data.device][data.hash].enabled = false;
+        updateNode(c.data.style, data.hash, data.data.name, data.newValue, false);
+      }
     }
     if (managers[data.session]) {
       managers[data.session].comm.emit('change:response', data);
