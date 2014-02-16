@@ -49,7 +49,9 @@ function(
         enabled: true,
         hash: false,
         parentHash: this.model.get('hash'),
-        name: ''
+        name: '',
+        originalName: '',
+        originalValue: ''
       });
       var node = children.last();
       node.listenerInit();

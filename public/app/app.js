@@ -5,7 +5,6 @@ define([
   'underscore',
   'backbone',
   'I18n',
-  'io',
   'spectrum',
   'CryptoJS',
   //plugins

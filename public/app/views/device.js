@@ -43,14 +43,14 @@ function(app) {
     },
 
     onCheckboxChange: function() {
-      var checked = this.$('input[type=checkbox]').prop('checked');
+      var checked = this.$('input[type=checkbox]').get(0).checked;
       this.$el[checked ? 'removeClass' : 'addClass']('disabled');
     },
 
     onDeviceEditClick: function() {
       this.trigger('device:edit', this.model);
       // TODO: Do this with a custom dialog?
-      var name = prompt('Device name:', this.model.get('nickname'));
+      var name = window.prompt('Device name:', this.model.get('nickname'));
       this.model.set('nickname', name);
     },
 

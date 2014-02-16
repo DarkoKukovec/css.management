@@ -44,9 +44,9 @@ function(
             color = color.toRgbString();
           } else {
             var format = app.getSettings('colorFormat');
-            if (format == 'rgb') {
+            if (format === 'rgb') {
               color = color.toRgbString();
-            } else if (format == 'hsl') {
+            } else if (format === 'hsl') {
               color = color.toHslString();
             } else {
               color = color.toHexString();
@@ -81,6 +81,10 @@ function(
     },
 
     onModelChange: function() {
+      if (!this.activeModel) {
+        this.clearData();
+        return;
+      }
       var name = this.activeModel.get('name');
       this.showDocs();
       this.$('.sidebar-node-name').text(name);

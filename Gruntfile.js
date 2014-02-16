@@ -106,7 +106,7 @@ module.exports = function(grunt) {
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
-        tasks: ['jshint:gruntfile']
+        tasks: ['jshint:gruntfile', 'jshint']
       },
       app: {
         files: 'public/assets/scss/**/*.scss',
@@ -185,6 +185,16 @@ module.exports = function(grunt) {
           {expand: false, src: ['public/index.html'], dest: deployFolder + 'index.html'}
         ]
       }
+    },
+
+    todos: {
+      options: {
+        priorities: {
+          low: /TODO/,
+          mid: /FIXME/,
+          high: null
+        }
+      }
     }
   });
 
@@ -202,10 +212,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-todos');
 
 
-  grunt.registerTask('debug', ['jshint', 'clean', 'jst', 'requirejs']);
-  grunt.registerTask('release', ['debug', 'concat', 'uglify', 'sass', 'cssmin', 'copy']);
+  grunt.registerTask('debug', ['todos', 'jshint', 'clean', 'jst', 'requirejs']);
+  grunt.registerTask('release', ['debug', 'concat', 'uglify:app', 'sass', 'cssmin', 'copy']);
   grunt.registerTask('default', ['concurrent:target']);
 
 };

@@ -63,7 +63,7 @@ function(
      ***/
 
     onToggle: function() {
-      var enabled = this.$('.property-toggle').prop('checked');
+      var enabled = this.$('.property-toggle').get(0).checked;
       this.model.set('enabled', enabled);
       this.$el[enabled ? 'removeClass' : 'addClass']('disabled-property');
     },
@@ -91,7 +91,7 @@ function(
       this.model.resetData();
       this.$('.node-property-name').val(this.model.get('name'));
       this.$('.important-toggle')[this.model.get('important') ? 'addClass' : 'removeClass']('important-on');
-      if (!this.$('.property-toggle').prop('checked')) {
+      if (!this.$('.property-toggle').get(0).checked) {
         this.$('.property-toggle').click();
       }
       this.updateValue();
@@ -102,7 +102,7 @@ function(
       if (chain) {
         var last;
         for (var i = 0; i < app.focusQueue.length; i++) {
-          if (app.focusQueue[i] && app.focusQueue[i].el &&  app.focusQueue[i].el != e.target) {
+          if (app.focusQueue[i] && app.focusQueue[i].el &&  app.focusQueue[i].el !== e.target) {
             last = app.focusQueue[i].el;
             break;
           }
@@ -141,7 +141,9 @@ function(
           e.target.select();
         }, 1);
       }
-      return false;
+      // I put this here for a reason... I'm just not sure for which reason...
+      // Commented out because the toggle didn't work
+      // return false;
     }
   });
 

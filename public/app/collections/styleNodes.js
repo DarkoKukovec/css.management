@@ -1,8 +1,10 @@
 define([
+  'app',
   'models/styleNode'
 ],
 
 function(
+    app,
     StyleNode
   ) {
   'use strict';
@@ -95,7 +97,7 @@ function(
           count++;
         }
       });
-      if (count != this.activeCount) {
+      if (count !== this.activeCount) {
         this.activeCount = count;
         this.trigger('children:change');
       }

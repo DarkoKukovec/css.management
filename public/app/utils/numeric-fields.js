@@ -1,11 +1,12 @@
 define([], function() {
+  'use strict';
 
   var updateNumericValue = function(e, el) {
-    if (e.type != 'keydown') {
+    if (e.type !== 'keydown') {
       return true;
     }
     var action = 0;
-    if (e.keyCode == 38) {
+    if (e.keyCode === 38) {
       if (e.shiftKey) {
         action = 10;
       } else if (e.altKey) {
@@ -13,7 +14,7 @@ define([], function() {
       } else {
         action = 1;
       }
-    } else if (e.keyCode == 40) {
+    } else if (e.keyCode === 40) {
       if (e.shiftKey) {
         action = -10;
       } else if (e.altKey) {
@@ -43,14 +44,14 @@ define([], function() {
     var before = value.substr(0, position).split(' ');
     var after = value.substr(position, value.length).split(' ');
     var start, end, current = '', result = [];
-    if (before[before.length - 1].trim() == before[before.length - 1]) {
+    if (before[before.length - 1].trim() === before[before.length - 1]) {
       current += before.pop();
     }
     before = before.join(' ');
     if (before.length) {
       before += ' ';
     }
-    if (after[0].trim() == after[0]) {
+    if (after[0].trim() === after[0]) {
       current += after.shift();
     }
     after = after.join(' ');
@@ -63,13 +64,13 @@ define([], function() {
     if (!matches) {
       return false;
     }
-    if (matches.length == 1) {
+    var offset = 0;
+    if (matches.length === 1) {
       start = current.indexOf(matches[0], offset);
       end = start + matches[0].length;
       result.push(before + current.substr(0, start), matches[0], current.substr(end, current.length) + after);
       return result;
     }
-    var offset = 0;
     for (var i = 0; i < matches.length; i++) {
       start = current.indexOf(matches[i], offset);
       end = start + matches[i].length;
@@ -90,7 +91,7 @@ define([], function() {
       var oSel = document.selection.createRange();
       oSel.moveStart('character', -el.value.length);
       position = oSel.text.length;
-    } else if (el.selectionStart || el.selectionStart == '0') {
+    } else if (el.selectionStart || el.selectionStart === '0') {
       position = el.selectionStart;
     }
 

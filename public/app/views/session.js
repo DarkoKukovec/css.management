@@ -33,7 +33,7 @@ function(
       if (name) {
         this.trigger('session:set', name);
       } else {
-        alert(I18n.t('session_name_required'));
+        window.alert(I18n.t('session_name_required'));
       }
     },
 

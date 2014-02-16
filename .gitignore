@@ -11,3 +11,4 @@ public/assets/css/main.css
 .nodemonignore
 public/beacon.client-build.js
 ._*
+public/deploy/*

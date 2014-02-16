@@ -70,7 +70,7 @@ function(
         // The current node is a group and the value is not the same
         return 1;
       }
-      if (node.type != this.get('type')) {
+      if (node.type !== this.get('type')) {
         return 0;
       }
 
@@ -90,9 +90,9 @@ function(
     },
 
     isOriginal: function() {
-      return this.get('name') == this.get('originalName') &&
-        this.get('value') == this.get('originalValue') &&
-        this.get('important') == this.get('originalImportant');
+      return this.get('name') === this.get('originalName') &&
+        this.get('value') === this.get('originalValue') &&
+        this.get('important') === this.get('originalImportant');
     },
 
     getDevices: function() {
@@ -227,7 +227,7 @@ function(
       if (!this.get('hash')) {
         // A new node
         var raw = (new Date()).getTime() + '-' + Math.random();
-        var hash = CryptoJS.SHA1(raw).toString();
+        var hash = window.CryptoJS.SHA1(raw).toString();
         this.set('hash', hash);
         var devices = this.get('parentDevices');
         var nodeDevices = {};
@@ -236,7 +236,6 @@ function(
         });
         this.set('devices', nodeDevices);
         this.addStyle();
-        console.log(this)
         return;
       }
 

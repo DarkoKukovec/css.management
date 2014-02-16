@@ -50,7 +50,7 @@ function(
 
     connect: function() {
       // Connection & listeners
-      app.socket = io.connect(location.protocol + '//' + location.host);
+      app.socket = window.io.connect(location.protocol + '//' + location.host);
       app.socket.on('manager:init', $.proxy(app.router.onInit, this));
       app.socket.on('device:add', $.proxy(app.router.devices.onAdd, app.router.devices));
       app.socket.on('device:remove', $.proxy(app.router.devices.onRemove, app.router.devices));
