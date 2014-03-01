@@ -23,7 +23,7 @@ StylIO = (function(window) {
 
   var Startup = {
     init: function() {
-      rawURL = document.getElementById('StylIO-beacon').src;
+      // rawURL = document.getElementById('StylIO-beacon').src;
       Comm.connect();
       styleData = {};
       Startup.setupListeners();

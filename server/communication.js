@@ -92,7 +92,7 @@ socket.on('connection', function(client) {
   });
 
   client.on('property:check:response', function(data) {
-    managers[data.session].comm.emit('property:check', data);
+    managers[data.session].comm.emit('property:check:response', data);
   });
 
   // client.on('modernizr:init', function(data) {

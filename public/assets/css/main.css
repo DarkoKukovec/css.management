@@ -402,7 +402,7 @@ License: MIT
   left: 50%;
   cursor: pointer;
   border: 1px solid black;
-  background: white;
+  background-color: white;
   opacity: .8; }
 
 .sp-alpha {
@@ -537,7 +537,7 @@ License: MIT
   left: -1px;
   right: -1px;
   border: 1px solid #000;
-  background: white;
+  background-color: white;
   opacity: .8; }
 
 /* Basic display options (colors, fonts, global widths) */
@@ -584,7 +584,7 @@ License: MIT
 
 .sp-input.sp-validation-error {
   border: 1px solid red;
-  background: #fdd; }
+  background-color: #fdd; }
 
 .sp-picker-container, .sp-palette-container {
   float: left;
@@ -644,7 +644,7 @@ License: MIT
   *zoom: 1;
   *display: inline;
   border: solid 1px #91765d;
-  background: #eee;
+  background-color: #eee;
   color: #333;
   vertical-align: middle; }
 
@@ -795,7 +795,7 @@ body {
     left: 0;
     right: 0;
     height: 59px;
-    background: #EBEBEB;
+    background-color: #EBEBEB;
     border-bottom: 2px solid #D0D0D0; }
     body .header .app-name {
       font-size: 34px;
@@ -847,7 +847,7 @@ body {
       padding-bottom: 16px; }
       body .styles-container > .style-item > li {
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-        background: #fff;
+        background-color: #fff;
         border-radius: 3px;
         padding: 8px 2px;
         margin: 0 6px 8px 0; }
@@ -911,7 +911,7 @@ body {
 
 .dialog, .card {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  background: #fff;
+  background-color: #fff;
   border-radius: 3px;
   margin: 6px;
   -webkit-transition: all 400ms ease;
@@ -1114,7 +1114,7 @@ li:last-child > .list-node {
   width: 219px; }
   .sidebar-container .sidebar {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-    background: #fff;
+    background-color: #fff;
     border-radius: 3px;
     padding: 8px 12px; }
     .sidebar-container .sidebar .placeholder {

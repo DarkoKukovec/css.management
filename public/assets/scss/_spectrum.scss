@@ -76,7 +76,7 @@ License: MIT
     left: 50%;
     cursor: pointer;
     border: 1px solid black;
-    background: white;
+    background-color: white;
     opacity: .8;
 }
 
@@ -214,7 +214,7 @@ License: MIT
     left: -1px;
     right: -1px;
     border: 1px solid #000;
-    background: white;
+    background-color: white;
     opacity: .8;
 }
 
@@ -267,7 +267,7 @@ License: MIT
 .sp-input.sp-validation-error
 {
     border: 1px solid red;
-    background: #fdd;
+    background-color: #fdd;
 }
 .sp-picker-container , .sp-palette-container
 {
@@ -337,7 +337,7 @@ License: MIT
     *zoom: 1;
     *display: inline;
     border: solid 1px #91765d;
-    background: #eee;
+    background-color: #eee;
     color: #333;
     vertical-align: middle;
 }

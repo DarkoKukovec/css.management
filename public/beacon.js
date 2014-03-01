@@ -37,23 +37,32 @@ function getScript() {
   return parseUrl(stack.join('/'));
 }
 
-window.addEventListener('load', function() {
+// Fire on load or immediately if load already happened
+// http://stackoverflow.com/questions/1523343/has-window-onload-fired-yet
+// Not sure if this works everywhere...
+window.setTimeout(function() {
   var header = document.getElementsByTagName('head')[0];
   var urlData = getScript();
   var baseUrl = urlData.host;
   window.appSession = urlData.session;
   window.appHost = urlData.host;
 
-  // Load socket.io
-  var io = document.createElement('script');
-  io.addEventListener('load', function() {
+  var beaconLoad = function() {
     // Load client
     var client = document.createElement('script');
     client.type = 'text/javascript';
     client.src = 'http://' + baseUrl + '/beacon.client-build.js';
     header.appendChild(client);
-  });
-  io.type = 'text/javascript';
-  io.src = 'http://' + baseUrl + '/socket.io/socket.io.js';
-  header.appendChild(io);
-});
+  };
+
+  if (typeof window.io === 'undefined') {
+    // Load socket.io
+    var io = document.createElement('script');
+    io.addEventListener('load', beaconLoad);
+    io.type = 'text/javascript';
+    io.src = 'http://' + baseUrl + '/socket.io/socket.io.js';
+    header.appendChild(io);
+  } else {
+    beaconLoad();
+  }
+}, 0);

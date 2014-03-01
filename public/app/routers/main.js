@@ -56,7 +56,7 @@ function(
       app.socket.on('device:remove', $.proxy(app.router.devices.onRemove, app.router.devices));
       app.socket.on('disconnect', $.proxy(app.router.onDisconnect, this));
       app.socket.on('change:response', app.comm.response);
-      app.socket.on('property:check', app.comm.response);
+      app.socket.on('property:check:response', app.comm.response);
     },
 
     // Main view setup
