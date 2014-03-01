@@ -78,8 +78,8 @@ socket.on('connection', function(client) {
         updateNode(c.data.style, data.hash, data.data.name, data.newValue, true);
         map[data.session][data.device][data.hash].enabled = true;
       } else {
-        map[data.session][data.device][data.hash].enabled = false;
         updateNode(c.data.style, data.hash, data.data.name, data.newValue, false);
+        map[data.session][data.device][data.hash].enabled = false;
       }
     }
     if (managers[data.session]) {

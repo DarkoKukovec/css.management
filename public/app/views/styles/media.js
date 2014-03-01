@@ -24,7 +24,7 @@ function(
       'keydown > div > .node-media-name': 'onValueKey',
       'keypress > div > .node-media-name': 'onValueKey',
       'blur > div > .node-media-name': 'onValueKey',
-      'change > .property-toggle': 'onToggle',
+      // 'change > .property-toggle': 'onToggle',
       'click > .reset-button': 'onReset',
       'click': 'setActive',
       'focus > div > input[type=text]': 'setActive',

@@ -74,6 +74,10 @@ normalizeNodes = function(style, map, revertCallback) {
         change = true;
       }
 
+      if (!node.enabled) {
+        change = true;
+      }
+
       if (node.originalImportant !== style[i].important) {
         ignore = true;
         node.originalImportant = node.important = style[i].important;
@@ -111,7 +115,7 @@ updateNode = function(style, nodeHash, nodeName, nodeValue, enabled) {
       if (enabled) {
         style[i].name = nodeName;
         style[i].value = nodeValue;
-        style[i].enabled = enabled;
+        style[i].enabled = true;
       } else {
         style[i].enabled = false;
       }

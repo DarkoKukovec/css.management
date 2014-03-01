@@ -54,7 +54,10 @@ function(
 
       if (!this.model.get('enabled')) {
         this.$el.addClass('disabled-property');
-        this.$('.property-toggle').get(0).checked = false;
+        var checkbox = this.$('.property-toggle').get(0);
+        if (checkbox) {
+          checkbox.checked = false;
+        }
       }
 
       return this;
@@ -148,6 +151,7 @@ function(
         }, 1);
       }
       // I put this here for a reason... I'm just not sure for which reason...
+      // Reason: If the propagation is not stopped, the container (e.g. media) gets the active state in sidebar
       // Commented out because the toggle didn't work
       // return false;
     }

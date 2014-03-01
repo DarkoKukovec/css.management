@@ -51,7 +51,9 @@ function(app) {
       this.trigger('device:edit', this.model);
       // TODO: Do this with a custom dialog?
       var name = window.prompt('Device name:', this.model.get('nickname'));
-      this.model.set('nickname', name);
+      if (name) {
+        this.model.set('nickname', name);
+      }
     },
 
     onDeviceResetClick: function() {
