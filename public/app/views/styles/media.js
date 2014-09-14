@@ -111,8 +111,16 @@ function(
     },
 
     setActive: function(e) {
+      if (this.focused) {
+        return;
+      }
       Backbone.trigger('sidebar:node:set', this.model);
       if (e.target.select) {
+        var me = this;
+        this.focused = true;
+        $(e.target).one('blur', function() {
+          me.focused = false;
+        });
         setTimeout(function() {
           e.target.select();
         }, 1);
