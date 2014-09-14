@@ -25,7 +25,8 @@ function(
       'click > .reset-button': 'onReset',
       'click': 'setActive',
       'focus > span > input[type=text]': 'setActive',
-      'focus > input[type=checkbox]': 'onCheckboxFocus'
+      'focus > input[type=checkbox]': 'onCheckboxFocus',
+      'click > input[type=checkbox]': 'onCheckboxClick'
     },
 
     initialize: function() {
@@ -150,10 +151,11 @@ function(
           e.target.select();
         }, 1);
       }
-      // I put this here for a reason... I'm just not sure for which reason...
-      // Reason: If the propagation is not stopped, the container (e.g. media) gets the active state in sidebar
-      // Commented out because the toggle didn't work
-      // return false;
+      return false;
+    },
+
+    onCheckboxClick: function(e) {
+      e.stopPropagation();
     }
   });
 
