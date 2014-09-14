@@ -51,4 +51,4 @@ var server = connect()
   .listen(port);
 
 //Socket.IO
-socket = io.listen(server).set('log level', 2);
+socket = io.listen(server);
