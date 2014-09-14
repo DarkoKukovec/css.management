@@ -1,4 +1,5 @@
 var connect = require('connect');
+var serveStatic = require('serve-static');
 var io = require('socket.io');
 
 module.exports = function(appName, version) {
@@ -48,7 +49,7 @@ module.exports = function(appName, version) {
   }
   // console.log('Modernizr ' + (modernizr ? 'enabled' : 'disabled'));
   var server = connect()
-    .use(connect.static('public'))
+    .use(serveStatic('public'))
     .listen(port);
 
   //Socket.IO
