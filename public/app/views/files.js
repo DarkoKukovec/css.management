@@ -20,6 +20,7 @@ function(app) {
 
     render: function() {
       var data = this.model.toJSON();
+      data.fileName = data.name.split('/').pop();
       this.$el.html(this.template(data));
       this.$el.attr('data-file-hash', this.model.get('hash'));
 

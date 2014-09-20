@@ -77,8 +77,9 @@ module.exports = function(grunt) {
 
     sass: {
       options: {
-        'debug-info': false,
-        compass: true
+        debugInfo: false,
+        compass: true,
+        sourcemap: 'none'
       },
       deploy: {
         files: {

@@ -88,11 +88,17 @@ li:last-child > .list-node {
 .important-toggle {
   opacity: 0.2;
   cursor: pointer;
+  display: none;
 
   &.important-on {
     opacity: 1;
     color: #C41C16;
+    display: inline;
   }
+}
+
+.style-item > li > .node-property:hover .important-toggle {
+  display: inline;
 }
 
 .new-property button {

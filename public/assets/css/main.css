@@ -1,4 +1,3 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,700,500italic,900,700italic,900italic);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ==========================================================================
    HTML5 display definitions
@@ -6,6 +5,7 @@
 /**
  * Correct `block` display not defined in IE 8/9.
  */
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,700,500italic,900,700italic,900italic);
 article,
 aside,
 details,
@@ -440,31 +440,31 @@ License: MIT
 
 /* Gradients for hue, saturation and value instead of images.  Not pretty... but it works */
 .sp-sat {
-  background-image: -webkit-gradient(linear, 0 0, 100% 0, from(white), to(rgba(204, 154, 129, 0)));
-  background-image: -webkit-linear-gradient(left, white, rgba(204, 154, 129, 0));
-  background-image: -moz-linear-gradient(left, white, rgba(204, 154, 129, 0));
-  background-image: -o-linear-gradient(left, white, rgba(204, 154, 129, 0));
-  background-image: -ms-linear-gradient(left, white, rgba(204, 154, 129, 0));
+  background-image: -webkit-gradient(linear, 0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
+  background-image: -webkit-linear-gradient(left, #FFF, rgba(204, 154, 129, 0));
+  background-image: -moz-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
+  background-image: -o-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
+  background-image: -ms-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
   background-image: linear-gradient(to right, #ffffff, rgba(204, 154, 129, 0));
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr=#FFFFFFFF, endColorstr=#00CC9A81)";
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr='#FFFFFFFF', endColorstr='#00CC9A81'); }
 
 .sp-val {
-  background-image: -webkit-gradient(linear, 0 100%, 0 0, from(black), to(rgba(204, 154, 129, 0)));
-  background-image: -webkit-linear-gradient(bottom, black, rgba(204, 154, 129, 0));
-  background-image: -moz-linear-gradient(bottom, black, rgba(204, 154, 129, 0));
-  background-image: -o-linear-gradient(bottom, black, rgba(204, 154, 129, 0));
-  background-image: -ms-linear-gradient(bottom, black, rgba(204, 154, 129, 0));
+  background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#000000), to(rgba(204, 154, 129, 0)));
+  background-image: -webkit-linear-gradient(bottom, #000000, rgba(204, 154, 129, 0));
+  background-image: -moz-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
+  background-image: -o-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
+  background-image: -ms-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
   background-image: linear-gradient(to top, #000000, rgba(204, 154, 129, 0));
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00CC9A81, endColorstr=#FF000000)";
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00CC9A81', endColorstr='#FF000000'); }
 
 .sp-hue {
-  background: -moz-linear-gradient(top, red 0%, yellow 17%, lime 33%, cyan 50%, blue 67%, magenta 83%, red 100%);
-  background: -ms-linear-gradient(top, red 0%, yellow 17%, lime 33%, cyan 50%, blue 67%, magenta 83%, red 100%);
-  background: -o-linear-gradient(top, red 0%, yellow 17%, lime 33%, cyan 50%, blue 67%, magenta 83%, red 100%);
-  background: -webkit-gradient(linear, left top, left bottom, from(red), color-stop(0.17, yellow), color-stop(0.33, lime), color-stop(0.5, cyan), color-stop(0.67, blue), color-stop(0.83, magenta), to(red));
-  background: -webkit-linear-gradient(top, red 0%, yellow 17%, lime 33%, cyan 50%, blue 67%, magenta 83%, red 100%); }
+  background: -moz-linear-gradient(top, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+  background: -ms-linear-gradient(top, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+  background: -o-linear-gradient(top, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+  background: -webkit-gradient(linear, left top, left bottom, from(#ff0000), color-stop(0.17, #ffff00), color-stop(0.33, #00ff00), color-stop(0.5, #00ffff), color-stop(0.67, #0000ff), color-stop(0.83, #ff00ff), to(#ff0000));
+  background: -webkit-linear-gradient(top, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%); }
 
 /* IE filters do not support multiple color stops.
    Generate 6 divs, line them up, and do two color gradients for each.
@@ -772,14 +772,12 @@ License: MIT
   src: url("../fonts/DejaVuSansMono-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/DejaVuSansMono-webfont.woff") format("woff"), url("../fonts/DejaVuSansMono-webfont.ttf") format("truetype"), url("../fonts/DejaVuSansMono-webfont.svg#dejavu_sans_monobook") format("svg");
   font-weight: normal;
   font-style: normal; }
-
 @font-face {
   font-family: 'DejaVuMono';
   src: url("../fonts/DejaVuSansMono-Bold-webfont.eot");
   src: url("../fonts/DejaVuSansMono-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/DejaVuSansMono-Bold-webfont.woff") format("woff"), url("../fonts/DejaVuSansMono-Bold-webfont.ttf") format("truetype"), url("../fonts/DejaVuSansMono-Bold-webfont.svg#dejavu_sans_monobold") format("svg");
   font-weight: bold;
   font-style: normal; }
-
 body {
   color: #000;
   background-color: #d5d5d5;
@@ -940,7 +938,7 @@ body {
     padding: 12px;
     font-weight: 300;
     font-size: 17px;
-    color: #0066cc;
+    color: #06c;
     cursor: pointer; }
   .dialog.display, .card.display {
     -webkit-transform: translate3d(0px, 0px, 0px) rotateX(0) scale(1, 1);
@@ -1093,10 +1091,15 @@ li:last-child > .list-node {
 
 .important-toggle {
   opacity: 0.2;
-  cursor: pointer; }
+  cursor: pointer;
+  display: none; }
   .important-toggle.important-on {
     opacity: 1;
-    color: #C41C16; }
+    color: #C41C16;
+    display: inline; }
+
+.style-item > li > .node-property:hover .important-toggle {
+  display: inline; }
 
 .new-property button {
   margin-left: 30px;
