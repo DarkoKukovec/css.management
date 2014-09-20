@@ -68,12 +68,13 @@ li:last-child > .list-node {
 }
 
 .changed-node {
-  .reset-button {
+  > .reset-button {
     display: inline-block;
     width: 18px;
     height: 18px;
     background-image: url(../images/reset.png);
-    margin: 0 -6px -5px -19px;
+    margin: 1px 0px -5px -12px;
+    float: left;
   }
 }
 
